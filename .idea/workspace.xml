@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="180" lean-forward="true" selection-start-line="180" selection-end-line="180" />
+            <state relative-caret-position="567">
+              <caret line="171" column="22" selection-start-line="171" selection-start-column="22" selection-end-line="171" selection-end-column="22" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -38,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="612">
-              <caret line="140" column="34" lean-forward="true" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
+              <caret line="140" column="34" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -61,6 +61,9 @@
       <find>image&quot; +</find>
     </findStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -80,6 +83,7 @@
     <option name="width" value="976" />
     <option name="height" value="1038" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -111,7 +115,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -162,8 +166,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19904964" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -204,7 +207,7 @@
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
-          <caret line="140" column="34" lean-forward="true" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
+          <caret line="140" column="34" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -213,8 +216,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="180" lean-forward="true" selection-start-line="180" selection-end-line="180" />
+        <state relative-caret-position="567">
+          <caret line="171" column="22" selection-start-line="171" selection-start-column="22" selection-end-line="171" selection-end-column="22" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
