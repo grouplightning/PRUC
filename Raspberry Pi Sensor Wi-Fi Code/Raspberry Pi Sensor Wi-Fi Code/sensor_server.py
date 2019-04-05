@@ -11,43 +11,62 @@ class SensorServer:
 
 	def start(self):
 		""" Listens for connection from hub."""
-		self.socket.bind(self.address)
-		self.socket.listen(self.queue)
-		print("Listening on {} port {}".format(*self.address))
+		try:
+			self.socket.bind(self.address)
+			self.socket.listen(self.queue)
+			print("Listening on {} port {}".format(*self.address))
+			return True
+		except:
+			print("Unable to start connection with hub")
+			return False
 
 	def stop(self):
 		"""Closes connection with hub."""
 		self.socket.close()
 
+	@staticmethod
+	def cleanupSocket(s):
+		try:
+			s.close()
+		except:
+			pass
+
+	@staticmethod
+	def get_commands_from(conn, handler):
+		while True:
+			try:
+				data = conn.recv(32)
+			except:
+				SensorServer.cleanupSocket(conn)
+				print("No command received. Closing connection.")
+				break
+			if data:
+				command = data.decode('utf-8')
+				print("Forwarding command to handler: " + command)
+				response = handler.run_command(command)
+				if response:
+					try:
+						# Ensure that handler has already encoded response to bytes
+						conn.sendall(response)
+					except:
+						print("The sensor response failed to send. Closing connection.")
+						SensorServer.cleanupSocket(conn)
+			else:
+				print("No command received. NO DATA!")
+				SensorServer.cleanupSocket(conn)
+				break
+			time.sleep(0.25)
+
 	def get_commands(self, handler):
 		while True:
-			conn, client_addr = self.socket.accept()
 			try:
+				conn, client_addr = self.socket.accept()
 				print("New connection:: ", client_addr)
-				while True:
-					# TODO Is this enough bytes?
-					try:
-						data = conn.recv(32)
-					except:
-						conn.close()
-						break
-					if data:
-						command = data.decode('utf-8')
-						print("forwarding command to handler: "+command)
-						response = handler.run_command(command)
-						if response is not None:
-							try:
-								conn.sendall(response)
-							except:
-								print("The sensor response failed to send. Closing connection.")
-								conn.close()
-					else:
-						print("No command received.")
-						break
-					time.sleep(0.25)
-			finally:
-				print("Connection to {} closed.".format(client_addr))
-				conn.close()
+				SensorServer.get_commands_from(conn,handler)
+			except:
+				print("Unable to accept socket connection.")
+				return False
+
 
 
 class DummyHandler:
