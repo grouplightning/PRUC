@@ -1,0 +1,4 @@
+*.zip
+*.priv
+*private*
+__pycache__/
