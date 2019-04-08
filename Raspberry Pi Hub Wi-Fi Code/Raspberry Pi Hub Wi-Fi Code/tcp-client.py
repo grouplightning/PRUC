@@ -1,5 +1,6 @@
 import socket
 import os
+import time
 
 class HubClient:
 	def __init__(self):
@@ -8,13 +9,19 @@ class HubClient:
 		self.chunk = 1024
 		self.image_length_size = 4
 		self.total_images = 0
+		self.park_open = 0
 
 	def connect(self, addr, port):
 		"""Connects to a remote sensor socket."""
-		self.remote_address = (addr, port)
-		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.socket.connect(self.remote_address)
-		print("Connecting to {} port {}".format(*self.remote_address))
+		try:
+			self.remote_address = (addr, port)
+			self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			self.socket.connect(self.remote_address)
+			print("Connecting to {} port {}".format(*self.remote_address))
+			return True
+		except:
+			print("UNABLE TO CONNECT TO HUB!!!!")
+			return False
 
 	def disconnect(self):
 		"""Closes the socket connection"""
@@ -27,20 +34,25 @@ class HubClient:
 		:return: The data response from the sensor
 		"""
 		data = bytes('', "utf-8")
+
+		command_bin = bytes(command, "utf-8")
 		try:
-			command_bin = bytes(command, "utf-8")
 			self.socket.settimeout(0.25)
 			self.socket.sendall(command_bin)
-			print("Sent command: " + command)
-			while True:
+		except:
+			print("Unable to send command %s" % command)
+			return False
+		print("Sent command: " + command)
+
+		while True:
+			try:
 				response = self.socket.recv(self.chunk)
-				# catch socket errors here
-				data += response
-				if len(response) == 0:
-					break
-				# TODO: DETECT ERROR DURING RECEIVE
-		finally:
-			return data
+			except:
+				response = bytes('',"utf-8")
+			data += response
+			if len(response) == 0:
+				break
+		return data
 
 	def execute_command_images(self, command, number_of_images):
 		"""Requests a number of images from the sensor and save those images.
@@ -48,19 +60,22 @@ class HubClient:
 		This function is made specifically for receiving and decoding multiple images.
 		:param command: The command string to be sent to the sensor.
 		:param number_of_images: This is the number of images we want save
-		:return: None
+		:return: Bool of whether or not the function succeeded.
 		"""
 		try:
 			command_bin = bytes(command, "utf-8")
 			self.socket.settimeout(1)
 			self.socket.sendall(command_bin)
 			print("Sent command: " + command)
-		except Exception as e:
-			# TODO: What to do on exception
-			print("I need to handle this exception! "+str(e))
+		except:
+			print("Unable to send execute_command_images command.")
+			return False
 		while number_of_images > 0:
-			response = self.socket.recv(self.image_length_size)
-			# need to catch timeout/socket errors that can occur above!!!
+			try:
+				response = self.socket.recv(self.image_length_size)
+			except:
+				print("Unable to get image length.")
+				return False
 			image_len = int.from_bytes(response,'big')
 			print(" image len = "+str(response)+" -> "+str(image_len))
 			image_data = bytes('',"utf-8")
@@ -71,19 +86,31 @@ class HubClient:
 					data = bytes('',"utf-8")
 				image_data += data
 				if len(data)==0:
-					print(" done reading "+str(len(data)))
+					print("Done reading "+str(len(data)))
 					break
 				image_len -= len(data)
 				print(" read "+str(len(data)))
-			print(" received image len = "+str(len(image_data)))
+
+			if not image_len == 0:
+				print("Error reading in image.")
+				return False
+
+			print(" received image len = "+ str(len(image_data)))
 			image_name = "image" + str(self.total_images + 1) + ".jpg"
-			image = open(image_name, "wb")
-			# TODO: Handle exception case!
-			image.write(image_data)
+
+			try:
+				image = open(image_name, "wb")
+				image.write(image_data)
+			except:
+				print("Error saving image data")
+				return False
+
 			print("Saved an image named: [" + image_name + "] to the hub.")
 
 			self.total_images += 1
 			number_of_images -= 1
+
+		return True
 
 	def get_image_amount(self):
 		"""Gets the number of images that the sensor needs to send to the hub.
@@ -104,33 +131,37 @@ class HubClient:
 	def get_one_image(self):
 		"""Gets and saves a single image from a sensor.
 
-		:return: None
+		:return:  Bool of whether or not we got 1 images from the sensor.
 		"""
-		# This function can use execute_command instead of execute_command_images
-		image_data = self.execute_command(command="getOneImage")
-		image_name = "image" + str(self.total_images + 1) + ".jpg"
-
-		image = open(image_name, "wb")
-		image.write(image_data)
-		# TODO: Exception case
-		print("Saved an image named: [" + image_name + "] to the hub.")
-		self.total_images += 1
+		retries = 3
+		success = False
+		while retries > 0 and not success:
+			success = self.execute_command_images(command="getOneImage", number_of_images=1)
+		return success
 
 
 	def get_five_images(self):
 		"""Gets and saves five images from a sensor.
 
-		:return: None
+		:return: Bool of whether or not we got 5 images from the sensor.
 		"""
-		self.execute_command_images(command="getFiveImages", number_of_images=5)
+		retries = 3
+		success = False
+		while retries > 0 and not success:
+			success = self.execute_command_images(command="getFiveImages", number_of_images=5)
+		return success
 
 
 	def get_ten_images(self):
 		"""Gets and saves ten images from a sensor.
 
-		:return: None
+		:return:  Bool of whether or not we got 10 images from the sensor.
 		"""
-		self.execute_command_images(command="getTenImages", number_of_images=10)
+		retries = 3
+		success = False
+		while retries > 0 and not success:
+			self.execute_command_images(command="getTenImages", number_of_images=10)
+		return success
 
 	def send_okay_signal(self, number_images_to_delete):
 		"""This sends an okay to the sensor with the number of images to delete.
@@ -140,15 +171,17 @@ class HubClient:
 		self.execute_command(command=("Okay " + str(number_images_to_delete)))
 
 	def get_sensor_images(self):
-		"""Gets and saves all images currently stored on the sensor."""
+		"""Gets and saves all images currently stored on the sensor.
+
+		:return: Bool of whether or not we got all sensor images.
+		"""
 		# update this
 		total_images = self.get_image_amount()
 		print("total images =  "+str(total_images))
 		if total_images==0:
 			print("No images available or error")
-			return
+			return False
 
-		# TODO: Check if this is correct decoding method
 		number_of_ten_loops = int(total_images / 10)
 		images_remaining = total_images - (number_of_ten_loops * 10)
 
@@ -158,18 +191,19 @@ class HubClient:
 		number_of_one_loops = images_remaining
 
 		for number in range(0, number_of_ten_loops):
-			self.get_ten_images()
+			if not self.get_ten_images(): return False
 			self.send_okay_signal(number_images_to_delete=10)
 
 		for number in range(0, number_of_five_loops):
-			self.get_five_images()
+			if not self.get_five_images(): return False
 			self.send_okay_signal(number_images_to_delete=5)
 
 		for number in range(0, number_of_one_loops):
-			self.get_one_image()
+			if not self.get_one_image(): return False
 			self.send_okay_signal(number_images_to_delete=1)
 
 		print("All images saved successfully.")
+		return True
 
 	def delete_all_images(self):
 		"""Deletes all saved images on the hub."""
@@ -185,11 +219,13 @@ class HubClient:
 
 	def hub_main_cycle(self):
 		""" The is the main sequence that the hub will repeatedly loop through."""
-
+		# TODO: Look into how sensor IP's are set; we want them to be static
 		# TODO: Implement multiple sensor capabilities
 		# TODO: Check time on loop to know when to request images.
 		# TODO: Implement a stored variable with all sensor's network information
 		# TODO: Handle exceptions for loss of signal
+
+
 
 #--------------------------------------------------------------------------------------------------
 
