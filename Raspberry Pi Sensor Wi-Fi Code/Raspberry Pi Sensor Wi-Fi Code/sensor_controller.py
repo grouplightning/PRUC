@@ -8,7 +8,7 @@ class ResponseHandler:
 
 	def run_command(self, raw_command):
 		#prepare arguments of the command in a list for commands to access
-		args = raw_command.split()
+		args = raw_command.split(sep=None, maxsplit=3)
 		arg_count = len(args)-1
 		command = args[0]
 		#if there is an argument besides the initial command eg: [command, arg, arg2], pop the initial command string off the front: [arg, arg2]
@@ -22,9 +22,9 @@ class ResponseHandler:
 
 
 		print("received command: "+ str(raw_command))
-		print(args)
-		print(arg_count)
-		print(iarg)
+		#print(args)
+		#print(arg_count)
+		#print(iarg)
 
 		if len(command) == 0:
 			print("Received command with no length.")
