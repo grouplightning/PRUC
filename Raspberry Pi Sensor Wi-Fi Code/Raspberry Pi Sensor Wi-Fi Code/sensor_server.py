@@ -63,8 +63,9 @@ class SensorServer:
 				conn, client_addr = self.socket.accept()
 				print("New connection:: ", client_addr)
 				SensorServer.get_commands_from(conn,handler)
-			except:
+			except Exception as e:
 				print("Unable to accept socket connection.")
+				print(e)
 				return False
 
 

@@ -54,7 +54,7 @@ class HubClient:
 				break
 		return data
 
-	def execute_command_images(self, command, number_of_images):
+	def execute_command_images(self, number_of_images):
 		"""Requests a number of images from the sensor and save those images.
 
 		This function is made specifically for receiving and decoding multiple images.
@@ -63,12 +63,15 @@ class HubClient:
 		:return: Bool of whether or not the function succeeded.
 		"""
 		try:
+			command = "getImages "+str(number_of_images)
 			command_bin = bytes(command, "utf-8")
 			self.socket.settimeout(1)
 			self.socket.sendall(command_bin)
 			print("Sent command: " + command)
-		except:
+		except Exception as e:
 			print("Unable to send execute_command_images command.")
+			print(e)
+			exit(0)
 			return False
 		while number_of_images > 0:
 			try:
@@ -128,40 +131,22 @@ class HubClient:
 			amount=0
 		return amount
 
-	def get_one_image(self):
-		"""Gets and saves a single image from a sensor.
-
-		:return:  Bool of whether or not we got 1 images from the sensor.
-		"""
-		retries = 3
-		success = False
-		while retries > 0 and not success:
-			success = self.execute_command_images(command="getOneImage", number_of_images=1)
-		return success
-
-
-	def get_five_images(self):
-		"""Gets and saves five images from a sensor.
+	def get_n_images(self, number_of_images):
+		"""Gets and saves N images from a sensor.
 
 		:return: Bool of whether or not we got 5 images from the sensor.
 		"""
 		retries = 3
 		success = False
 		while retries > 0 and not success:
-			success = self.execute_command_images(command="getFiveImages", number_of_images=5)
+			success = self.execute_command_images(number_of_images)
 		return success
 
+	def transfer_n_images(self, number_of_images):
+		if not self.get_n_images(number_of_images): return False
+		self.send_okay_signal(number_images_to_delete=number_of_images)
+		return True
 
-	def get_ten_images(self):
-		"""Gets and saves ten images from a sensor.
-
-		:return:  Bool of whether or not we got 10 images from the sensor.
-		"""
-		retries = 3
-		success = False
-		while retries > 0 and not success:
-			self.execute_command_images(command="getTenImages", number_of_images=10)
-		return success
 
 	def send_okay_signal(self, number_images_to_delete):
 		"""This sends an okay to the sensor with the number of images to delete.
@@ -191,16 +176,13 @@ class HubClient:
 		number_of_one_loops = images_remaining
 
 		for number in range(0, number_of_ten_loops):
-			if not self.get_ten_images(): return False
-			self.send_okay_signal(number_images_to_delete=10)
+			if not self.transfer_n_images(10): return False
 
 		for number in range(0, number_of_five_loops):
-			if not self.get_five_images(): return False
-			self.send_okay_signal(number_images_to_delete=5)
+			if not self.transfer_n_images(5): return False
 
 		for number in range(0, number_of_one_loops):
-			if not self.get_one_image(): return False
-			self.send_okay_signal(number_images_to_delete=1)
+			if not self.transfer_n_images(1): return False
 
 		print("All images saved successfully.")
 		return True
@@ -241,7 +223,8 @@ class ImageResponseHandler:
 		print("wrote response data to file")
 
 client = HubClient()
-client.connect("10.3.141.54", 1234)
+#client.connect("10.3.141.54", 1234)
+client.connect("127.0.0.1", 1234)
 client.get_sensor_images()
 client.disconnect()
 
