@@ -41,9 +41,13 @@ class SensorServer:
 				print("No command received. Closing connection.")
 				break
 			if data:
-				command = data.decode('utf-8')
+				command = data.decode('utf-8') #could UTF-8 decoding fail?
 				print("Forwarding command to handler: " + command)
-				response = handler.run_command(command)
+				try:
+					response = handler.run_command(command)
+				except Exception as e:
+					print("Exception in command handler")
+					print(e)
 				if response:
 					try:
 						# Ensure that handler has already encoded response to bytes
