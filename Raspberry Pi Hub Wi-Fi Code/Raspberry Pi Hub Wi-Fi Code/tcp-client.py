@@ -71,7 +71,6 @@ class HubClient:
 		except Exception as e:
 			print("Unable to send execute_command_images command.")
 			print(e)
-			exit(0)
 			return False
 		while number_of_images > 0:
 			try:
