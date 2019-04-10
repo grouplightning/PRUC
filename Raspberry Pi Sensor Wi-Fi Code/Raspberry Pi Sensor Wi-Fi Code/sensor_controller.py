@@ -14,11 +14,11 @@ class ResponseHandler:
 		#if there is an argument besides the initial command eg: [command, arg, arg2], pop the initial command string off the front: [arg, arg2]
 		if arg_count>0:
 			args.pop(0)
-		iarg=0
+		#many commands rely on an integer parameter, this prevents errors from occuring
 		try:
 			iarg=int(args[0])
 		except:
-			pass
+			iarg=0
 
 
 		print("received command: "+ str(raw_command))
