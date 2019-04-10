@@ -27,6 +27,25 @@ class HubClient:
 		"""Closes the socket connection"""
 		self.socket.close()
 
+	def send_command(self,command, timeout = 0):
+		"""
+		Send a command string, padded to the length required by the Sensor Server buffer.
+		:param command: The command string to be sent to the sensor.
+		#param timeout: (OPTIONAL) the length of socket timeout for sending the command, in seconds; the timeout is not changed if it is set to 0.
+		"""
+		try:
+			command_bin = bytes(command, "utf-8")
+			remaining_bytes = 32 - len(command_bin)
+			padding = b'\x20' * remaining_bytes #creating bytes of length 32-N all set to space
+			if timeout!=0: self.socket.settimeout(timeout)
+			self.socket.sendall(command_bin + padding)
+			print("Sent command: " + command)
+			return True
+		except:
+			print("Unable to send command %s" % command)
+			return False
+
+
 	def execute_command(self, command):
 		"""Sends a command to a sensor and receives the sensor's response
 
@@ -35,14 +54,7 @@ class HubClient:
 		"""
 		data = bytes('', "utf-8")
 
-		command_bin = bytes(command, "utf-8")
-		try:
-			self.socket.settimeout(0.25)
-			self.socket.sendall(command_bin)
-		except:
-			print("Unable to send command %s" % command)
-			return False
-		print("Sent command: " + command)
+		if not self.send_command(command,0.25): return False
 
 		while True:
 			try:
@@ -62,16 +74,9 @@ class HubClient:
 		:param number_of_images: This is the number of images we want save
 		:return: Bool of whether or not the function succeeded.
 		"""
-		try:
-			command = "getImages "+str(number_of_images)
-			command_bin = bytes(command, "utf-8")
-			self.socket.settimeout(1)
-			self.socket.sendall(command_bin)
-			print("Sent command: " + command)
-		except Exception as e:
-			print("Unable to send execute_command_images command.")
-			print(e)
-			return False
+		command = "getImages "+str(number_of_images)
+		if not self.send_command(command,1): return False
+
 		while number_of_images > 0:
 			try:
 				response = self.socket.recv(self.image_length_size)
