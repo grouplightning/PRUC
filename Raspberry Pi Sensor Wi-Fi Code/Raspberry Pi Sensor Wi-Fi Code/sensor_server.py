@@ -46,6 +46,7 @@ class SensorServer:
 				try:
 					response = handler.run_command(command)
 				except Exception as e:
+					response = bytes('','utf-8')#don't allow response to be uninitialized when sending back
 					print("Exception in command handler")
 					print(e)
 				if response:
