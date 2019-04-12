@@ -1,0 +1,5 @@
+sudo /etc/init.d/networking restart
+
+copied working wifi and usb versions
+	/etc/wpa_supplicant/wpa_supplicant.conf
+	and /etc/networking/interfaces
