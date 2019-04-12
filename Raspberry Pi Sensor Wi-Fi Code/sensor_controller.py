@@ -6,6 +6,10 @@ class ResponseHandler:
 		self.image_length_size = 4
 		self.total_images = 0
 
+	def add_one_total_images(self):
+		"""Add one to the count of total images"""
+		self.total_images +=1
+
 	def run_command(self, raw_command):
 		#prepare arguments of the command in a list for commands to access
 		args = raw_command.split(sep=None, maxsplit=3)
@@ -40,6 +44,8 @@ class ResponseHandler:
 		elif command=="Okay":
 			self.process_okay(iarg)
 			return bytes("Okay, deleted the images.",'utf-8')
+		elif command == "Cleanup":
+			return self.cleanup()
 		elif command == "ping":
 			return self.ping(args[0])
 		print(" unknown command: `"+str(command)+"`")
@@ -105,6 +111,9 @@ class ResponseHandler:
 			self.total_images -= 1
 		except:
 			print("Unable to delete image %s. Does it exist?" % image_name)
+
+	def cleanup(self):
+		"""This resets any necessary information after the hub is finished with the sensor"""
 
 
 

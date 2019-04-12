@@ -27,6 +27,10 @@ class HubClient:
 		"""Closes the socket connection"""
 		self.socket.close()
 
+	def add_one_total_images(self):
+		"""Adds one to the total image variable"""
+		self.total_images += 1
+
 	def send_command(self,command, timeout = 0):
 		"""
 		Send a command string, padded to the length required by the Sensor Server buffer.
@@ -158,6 +162,14 @@ class HubClient:
 		"""
 		self.execute_command(command=("Okay " + str(number_images_to_delete)))
 
+	def send_cleanup_signal(self):
+		"""This sends a final cleanup command to the sensor.
+
+		Deletes any excess images, resets time clock, any other cleanup tasks
+		"""
+		self.execute_command(command="Cleanup")
+
+
 	def get_sensor_images(self):
 		"""Gets and saves all images currently stored on the sensor.
 
@@ -186,6 +198,8 @@ class HubClient:
 
 		for number in range(0, number_of_one_loops):
 			if not self.transfer_n_images(1): return False
+
+		self.send_cleanup_signal()
 
 		print("All images saved successfully.")
 		return True
