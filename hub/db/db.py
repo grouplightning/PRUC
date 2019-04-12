@@ -67,7 +67,7 @@ class DB:
 		self.query("UPDATE sensors SET name="+name+" WHERE id="+id)
 		self.conn.commit()
 
-
+"""
 db = DB();
 result = db.getSensor(7)
 print(result)
@@ -88,3 +88,5 @@ db.updateSensor(7,"northwest")
 results = db.query("SELECT * FROM sensors")
 for row in results:
 	print(row)
+
+"""

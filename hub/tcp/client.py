@@ -109,7 +109,7 @@ class HubClient:
 			image_name = "image" + str(self.total_images + 1) + ".jpg"
 
 			try:
-				image = open(image_name, "wb")
+				image = open(os.path.join("images",image_name), "wb")
 				image.write(image_data)
 			except:
 				print("Error saving image data")
@@ -228,34 +228,12 @@ class HubClient:
 
 #--------------------------------------------------------------------------------------------------
 
-class DummyResponseHandler:
-	def response_callback(self, conn, client_addr, data):
-		print(str(data))
 
-
-class ImageResponseHandler:
-	def response_callback(self, conn, addr, data):
-		file = open("image.jpg", "wb")
-		file.write(data)
-		print("wrote response data to file")
-
+"""
 client = HubClient()
 #client.connect("10.3.141.54", 1234)
 client.connect("127.0.0.1", 1234)
 client.get_sensor_images()
 client.disconnect()
 
-
-
-"""
-resp_handler = DummyResponseHandler()
-client = HubClient()
-client.connect("10.3.141.54", 1234)
-client.execute_command("ping xyz", resp_handler)
-client.disconnect()
-
-resp_handler = ImageResponseHandler()
-client.connect("10.3.141.54", 1234)
-client.execute_command("getimage", resp_handler)
-client.disconnect()
 """

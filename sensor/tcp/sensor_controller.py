@@ -82,7 +82,6 @@ class ResponseHandler:
 			retries = 3
 			counter += 1
 			combined_data += int.to_bytes(len(data),4, byteorder='big') + data
-		# TODO: When will we update the master variable and delete the images sent?
 		# TODO: How will we get the timestamp information?
 		return combined_data
 
