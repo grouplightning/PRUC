@@ -31,7 +31,7 @@ class HubClient:
 		"""
 		Send a command string, padded to the length required by the Sensor Server buffer.
 		:param command: The command string to be sent to the sensor.
-		#param timeout: (OPTIONAL) the length of socket timeout for sending the command, in seconds; the timeout is not changed if it is set to 0.
+		:param timeout: (OPTIONAL) the length of socket timeout for sending the command, in seconds; the timeout is not changed if it is set to 0.
 		"""
 		try:
 			command_bin = bytes(command, "utf-8")
@@ -70,7 +70,6 @@ class HubClient:
 		"""Requests a number of images from the sensor and save those images.
 
 		This function is made specifically for receiving and decoding multiple images.
-		:param command: The command string to be sent to the sensor.
 		:param number_of_images: This is the number of images we want save
 		:return: Bool of whether or not the function succeeded.
 		"""

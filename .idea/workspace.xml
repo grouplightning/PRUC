@@ -4,6 +4,7 @@
     <list default="true" id="1821d1fc-6a77-4053-a040-c5fb11f7aa06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1836">
-              <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
+            <state relative-caret-position="349">
+              <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -28,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-54">
-              <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+            <state relative-caret-position="379">
+              <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -37,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="729">
-              <caret line="27" column="31" lean-forward="true" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+            <state relative-caret-position="2106">
+              <caret line="78" column="83" lean-forward="true" selection-start-line="78" selection-start-column="83" selection-end-line="78" selection-end-column="83" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -79,10 +80,10 @@
         <option value="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/sensor_server.py" />
         <option value="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py" />
         <option value="$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/tcp-client.py" />
-        <option value="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py" />
         <option value="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/test.py" />
-        <option value="$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py" />
         <option value="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_server.py" />
+        <option value="$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py" />
+        <option value="$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py" />
       </list>
     </option>
   </component>
@@ -187,7 +188,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3295711" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -203,20 +204,10 @@
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/tcp-client.py" />
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/sensor_server.py" />
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/test.py" />
-    <entry file="file://$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-54">
-          <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+        <state relative-caret-position="379">
+          <caret line="41" column="21" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -225,10 +216,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Raspberry Pi Sensor Wi-Fi Code/Raspberry Pi Sensor Wi-Fi Code/sensor_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="27" column="31" lean-forward="true" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+        <state relative-caret-position="2106">
+          <caret line="78" column="83" lean-forward="true" selection-start-line="78" selection-start-column="83" selection-end-line="78" selection-end-column="83" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Raspberry Pi Hub Wi-Fi Code/Raspberry Pi Hub Wi-Fi Code/tcp-client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

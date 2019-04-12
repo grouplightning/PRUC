@@ -65,11 +65,11 @@ class ResponseHandler:
 				print("Error reading image data, trying %d more times" % retries)
 				retries -= 1
 				if retries == 0:
+					print("%s was unable to be sent to the hub. DELETING IMAGE." %
+						  ("image" + str(current_images) + ".jpg"))
 					self.delete_image(current_image=current_images)
 					current_images-=1 # this line was `counter -= 1` which caused an infinite loop, the counter is not incremented because of the 'continue' however current_images was not being decreased with the deletion
 					retries = 3
-					print("%s was unable to be sent to the hub. DELETING IMAGE." %
-						  ("image" + str(current_images) + ".jpg"))
 				continue
 
 			current_images -= 1
