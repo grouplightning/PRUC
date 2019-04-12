@@ -41,9 +41,14 @@ class SensorServer:
 				print("No command received. Closing connection.")
 				break
 			if data:
-				command = data.decode('utf-8')
+				command = data.decode('utf-8') #could UTF-8 decoding fail?
 				print("Forwarding command to handler: " + command)
-				response = handler.run_command(command)
+				try:
+					response = handler.run_command(command)
+				except Exception as e:
+					response = bytes('','utf-8')#don't allow response to be uninitialized when sending back
+					print("Exception in command handler")
+					print(e)
 				if response:
 					try:
 						# Ensure that handler has already encoded response to bytes
@@ -63,8 +68,9 @@ class SensorServer:
 				conn, client_addr = self.socket.accept()
 				print("New connection:: ", client_addr)
 				SensorServer.get_commands_from(conn,handler)
-			except:
+			except Exception as e:
 				print("Unable to accept socket connection.")
+				print(e)
 				return False
 
 
