@@ -2,4 +2,4 @@
 *.priv
 *private*
 __pycache__/
-images/
+.idea/
