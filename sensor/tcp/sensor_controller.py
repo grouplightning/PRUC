@@ -132,9 +132,9 @@ class ResponseHandler:
 	def cleanup(self):
 		"""This resets any necessary information after the hub is finished with the sensor, including deleting old images
 		"""
-		self.total_images=0
 		for image in ResponseHandler.get_image_list():
 			self.delete_image_by_name(image)
+		self.total_images=0
 
 
 
