@@ -107,19 +107,27 @@ class ResponseHandler:
 		for _ in range(0, images_to_delete):
 			self.delete_image(current_image=self.total_images)
 
-	def delete_image(self, current_image):
-		"""Deletes a specified images.
+	def delete_image_by_name(self, filename):
+		"""Deletes the specified image filename.
 
-		:param current_image: The number of the image to delete.
+		:param filename: The filename of the image to delete
 		:return: None
 		"""
-		image_name = ("images/image" + str(current_image) + ".jpg")
+		image_name = ("images/" + str(filename))
 		try:
 			os.remove(image_name)
 			print("Deleted image %s." % image_name)
 			self.total_images -= 1
 		except:
 			print("Unable to delete image %s. Does it exist?" % image_name)
+
+	def delete_image(self, current_image):
+		"""Deletes the specified image number
+
+		:param current_image: The number of the image to delete.
+		:return: None
+		"""
+		self.delete_image_by_name("image"+str(current_image)+".jpg")
 
 	def cleanup(self):
 		"""This resets any necessary information after the hub is finished with the sensor"""
