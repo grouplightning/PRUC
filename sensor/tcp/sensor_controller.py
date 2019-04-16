@@ -6,6 +6,16 @@ class ResponseHandler:
 		self.image_length_size = 4
 		self.total_images = 0
 
+	@staticmethod
+	def get_image_list():
+		"""
+		Retrieves the current list of images in the images/ directory
+		:return: list of image filenames, relative to the images/ directory
+		"""
+		return [name for name in os.listdir('images') if os.path.isfile("images/" + name)] #bugfix couunt not getting image count - don't trust stackoverflow!
+
+
+
 	def add_one_total_images(self):
 		"""Add one to the count of total images"""
 		self.total_images +=1
@@ -35,7 +45,7 @@ class ResponseHandler:
 			return
 
 		if command == "totalImages":
-			total_images = len([name for name in os.listdir('images') if os.path.isfile("images/"+name)]) #bugfix couunt not getting image count - don't trust stackoverflow!
+			total_images = len(ResponseHandler.get_image_list())
 			self.total_images = total_images
 			print(total_images)
 			return bytes(str(total_images),'utf-8')
