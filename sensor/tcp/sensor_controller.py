@@ -1,5 +1,6 @@
 from sensor_server import SensorServer
 import os, os.path
+import struct
 
 class ResponseHandler:
 	def __init__(self):
@@ -14,7 +15,30 @@ class ResponseHandler:
 		"""
 		return [name for name in os.listdir('images') if os.path.isfile("images/" + name)] #bugfix couunt not getting image count - don't trust stackoverflow!
 
+	@staticmethod
+	def get_mtime_by_name(filename):
+		"""
+		Retrieves the modification timestamp (POSIX UTC seconds since EPOCH) of an image file
+		:param filename: the filename of the image to check
+		:return: the timestamp indicating when the file was last modified
+		"""
+		image_name = "images/" + filename
+		return os.path.getmtime(image_name)
 
+	@staticmethod
+	def get_mtime(current_image):
+		return ResponseHandler.get_mtime_by_name("image" + str(current_image) + ".jpg")
+
+	@staticmethod
+	def mtime_to_bytes(mtime):
+		"""
+		Converts a modification timestamp (seconds since EPOCH) into a portable byte array.
+		This array will have length 4 by default.  NOTE: may require updating to 8 bytes before 2038.
+		:param mtime: the timestamp to convert
+		:return: byte array representing the timestamp
+		"""
+		imtime = int(mtime)
+		return struct.pack(">i", imtime)
 
 	def add_one_total_images(self):
 		"""Add one to the count of total images"""
