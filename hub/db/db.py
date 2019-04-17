@@ -51,17 +51,34 @@ class DB:
 
 	#outdated method - can be used to create a temporary sensor entry to be updated later
 	def createSensor(self, id, name):
+		"""
+		Create a temporary sensor entry to have data identifying the sensor added later.
+		:param id: the internal id of the sensor
+		:param name: the user-set name of the sensor
+		:return: row id added
+		"""
 		id = self.escape(id)
 		name = self.escape(name)
 		self.query("INSERT INTO sensors (id,name) VALUES (%s,%s)" % (id, name))
 		self.conn.commit()
+		return self.cur.lastrowid # return the internal row number (sensorid when using autoincrement)
+		#TODO: need to check lastrowid behavior / choose id type in our sensor table (autoincrement int would be easiest)
 
 	def createSensor(self,id,name,mac,ip):
+		"""
+		Create a sensor database entry that has fully denied information (name,mac,ip)
+		:param id: the internal id of the sensor
+		:param name: the user-set name of the sensor
+		:param mac: the MAC address of the sensor
+		:param ip: the IP address of the sensor
+		:return: row id added
+		"""
 		id = self.escape(id)
 		name = self.escape(name)
 		self.query("INSERT INTO sensors (id,name,mac,ip) VALUES (%s,%s,%s,%s)" % (id,name,mac,ip) )
 		self.conn.commit()
-		return self.cur.lastrowid # return the internal sensorid number
+		return self.cur.lastrowid # return the internal row number (sensorid when using autoincrement)
+		#TODO: need to check lastrowid behavior / choose id type in our sensor table (autoincrement int would be easiest)
 
 	def deleteSensor(self,id):
 		id = self.escape(id)
