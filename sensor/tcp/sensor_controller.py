@@ -49,7 +49,7 @@ class ResponseHandler:
 		#prepare arguments of the command in a list for commands to access
 		args = raw_command.split(sep=None, maxsplit=3)
 		arg_count = len(args)-1
-		command = args[0]
+		command = args[0].lower()
 		#if there is an argument besides the initial command eg: [command, arg, arg2], pop the initial command string off the front: [arg, arg2]
 		if arg_count>0:
 			args.pop(0)
@@ -69,17 +69,17 @@ class ResponseHandler:
 			print("Received command with no length.")
 			return
 
-		if command == "totalImages":
+		if command == "totalimages":
 			total_images = len(ResponseHandler.get_image_list())
 			self.total_images = total_images
 			print(total_images)
 			return bytes(str(total_images),'utf-8')
-		elif command=="getImages":
+		elif command=="getimages":
 			return self.get_n_images(iarg)
-		elif command=="Okay":
+		elif command=="okay":
 			self.process_okay(iarg)
 			return bytes("Okay, deleted the images.",'utf-8')
-		elif command == "Cleanup":
+		elif command == "cleanup":
 			return self.cleanup()
 		elif command == "ping":
 			return self.ping(args[0])
