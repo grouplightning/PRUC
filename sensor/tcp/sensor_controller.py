@@ -1,6 +1,7 @@
 from sensor_server import SensorServer
 import os, os.path
 import struct
+import time
 
 class ResponseHandler:
 	def __init__(self):
@@ -82,6 +83,9 @@ class ResponseHandler:
 			return self.cleanup()
 		elif command == "ping":
 			return self.ping(args[0])
+		elif command == "time":
+			#server_ts = float(args[0]) # here if we need it
+			return bytes(str(time.time()),'utf-8')
 		print(" unknown command: `"+str(command)+"`")
 
 	def ping(self, arg):

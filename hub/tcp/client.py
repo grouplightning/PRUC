@@ -161,6 +161,11 @@ class HubClient:
 			success = self.execute_command_images(number_of_images)
 		return success
 
+	def get_sensor_timestamp(self):
+		ts = self.execute_command("time "+str(time.time()))
+		ts = ts.decode('utf-8')
+		return float(ts)
+
 	def transfer_n_images(self, number_of_images):
 		if not self.get_n_images(number_of_images): return False
 		self.send_okay_signal(number_images_to_delete=number_of_images)
