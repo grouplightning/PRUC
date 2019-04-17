@@ -49,10 +49,17 @@ class DB:
 		self.query("DELETE FROM counts WHERE time<"+time_before)
 		self.conn.commit()
 
-	def createSensor(self,id,name):
+	#outdated method - can be used to create a temporary sensor entry to be updated later
+	def createSensor(self, id, name):
 		id = self.escape(id)
 		name = self.escape(name)
-		self.query("INSERT INTO sensors (id,name) VALUES ("+id+","+name+")")
+		self.query("INSERT INTO sensors (id,name) VALUES (%s,%s)" % (id, name))
+		self.conn.commit()
+
+	def createSensor(self,id,name,mac,ip):
+		id = self.escape(id)
+		name = self.escape(name)
+		self.query("INSERT INTO sensors (id,name,mac,ip) VALUES (%s,%s,%s,%s)" % (id,name,mac,ip) )
 		self.conn.commit()
 		return self.cur.lastrowid # return the internal sensorid number
 
@@ -61,10 +68,10 @@ class DB:
 		self.query("DELETE FROM sensors WHERE id="+id)
 		self.conn.commit()
 
-	def updateSensor(self,id,name):
+	def updateSensor(self,id,name,mac,ip):
 		id = self.escape(id)
 		name = self.escape(name)
-		self.query("UPDATE sensors SET name="+name+" WHERE id="+id)
+		self.query("UPDATE sensors SET name=%s, mac=%s, ip=%s WHERE id=%s" % (name,mac,ip,id))
 		self.conn.commit()
 
 """
