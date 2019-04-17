@@ -3,7 +3,7 @@ import os
 import configparser
 from tcp.client import HubClient
 from db.db import DB
-import deep_od_lib
+from image_detection.deep_od_lib import *
 #from deep_od_lib import *
 
 db = DB()
