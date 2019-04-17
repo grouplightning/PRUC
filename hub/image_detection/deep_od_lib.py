@@ -2,8 +2,8 @@ import numpy as np
 import argparse
 import cv2
 
-prototxt="MobileNetSSD_deploy.prototxt.txt"
-model="MobileNetSSD_deploy.caffemodel"
+prototxt="image_detection/MobileNetSSD_deploy.prototxt.txt"
+model="image_detection/MobileNetSSD_deploy.caffemodel"
 
 # initialize the list of class labels MobileNet SSD was trained to
 # detect, then generate a set of bounding box colors for each class
