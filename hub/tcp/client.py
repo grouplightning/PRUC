@@ -1,6 +1,7 @@
 import socket
 import os
 import time
+import struct
 
 class HubClient:
 	def __init__(self):
@@ -121,6 +122,17 @@ class HubClient:
 			number_of_images -= 1
 
 		return True
+
+	@staticmethod
+	def bytes_to_mtime(bytes):
+		"""
+		Converts a portable byte array into a modification timestamp (seconds since EPOCH).
+		This array will have length 4 by default.  NOTE: may require updating to 8 bytes before 2038.
+		:param bytes: the timestamp to convert, represented in bytes
+		:return: the timestamp in seconds
+		"""
+		values = struct.unpack(">i", bytes)
+		return int(values[0])
 
 	def get_image_amount(self):
 		"""Gets the number of images that the sensor needs to send to the hub.
