@@ -16,8 +16,11 @@ class DB:
 
 	def __del__(self): #cleanup database resources when the program stops using db
 		print("Freeing database...")
-		self.cur.close() #
-		self.conn.close() #close the database connection
+		try:
+			self.cur.close() #
+			self.conn.close() #close the database connection
+		except:
+			pass
 
 	def query(self,query): #execute a query on the database and provide the cursor for result data iteration
 		self.cur.execute(query)
