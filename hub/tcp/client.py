@@ -32,7 +32,7 @@ class HubClient:
 		"""Adds one to the total image variable"""
 		self.total_images += 1
 
-	def send_command(self,command, timeout = 0):
+	def send_command(self,command, timeout = 0.0):
 		"""
 		Send a command string, padded to the length required by the Sensor Server buffer.
 		:param command: The command string to be sent to the sensor.
@@ -42,7 +42,7 @@ class HubClient:
 			command_bin = bytes(command, "utf-8")
 			remaining_bytes = 32 - len(command_bin)
 			padding = b'\x20' * remaining_bytes #creating bytes of length 32-N all set to space
-			if timeout!=0: self.socket.settimeout(timeout)
+			if timeout!=0.0: self.socket.settimeout(timeout)
 			self.socket.sendall(command_bin + padding)
 			print("Sent command: " + command)
 			return True
@@ -230,16 +230,16 @@ class HubClient:
 		print("All images deleted.")
 
 	# TODO: What other commands do we want to send
-	# TODO: Implement function that calls detection algorithm
+	# Implement function that calls detection algorithm (see scheduler)
 
 
 	def hub_main_cycle(self):
 		""" The is the main sequence that the hub will repeatedly loop through."""
 		# TODO: Look into how sensor IP's are set; we want them to be static
 		# TODO: Implement multiple sensor capabilities
-		# TODO: Check time on loop to know when to request images.
-		# TODO: Implement a stored variable with all sensor's network information
-		# TODO: Handle exceptions for loss of signal
+		# Check time on loop to know when to request images. (handled by scheduler)
+		# TODO: Implement a stored variable with all sensor's network information (add to DB during pairing, read by scheduler)
+		# Handle exceptions for loss of signal (should be more or less handled)
 
 
 
