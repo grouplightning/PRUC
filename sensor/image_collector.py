@@ -34,7 +34,9 @@ class ImageThread(Thread):
 		pir_start()
 		while not self.stopped.wait(0.05):
 			wait_for_image()
+		print("closing pir")
 		pir_close()
+		print("closed pir")
 
 	# my_gui.images_num += 1;
 	#        detect_image("image.jpg",0.7,gui_callback)
