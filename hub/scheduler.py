@@ -29,7 +29,8 @@ def get_images(sensor_id,ip):
 		detections = {"person": 0, "horse": 0, "dog": 0, "car": 0, "bicycle": 0}
 		for image_name in image_names:
 			try:
-				detect_image(os.path.join("images",image_name), 0.75, image_detect_collect_counts)
+				if detect_image(os.path.join("images",image_name), 0.75, image_detect_collect_counts) is None:
+					print(" cv2 imread failed")
 			except Exception as e:
 				print("Error in image detection")
 				print(e)
