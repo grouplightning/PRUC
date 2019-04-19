@@ -96,7 +96,7 @@ class ResponseHandler:
 				self.image_thread_event = Event()
 				self.image_thread = ImageThread(self.image_thread_event)
 				self.image_thread.start()
-			elif:
+			else:
 				self.image_thread_event.clear()
 			return bytes("Okay", 'utf-8')
 		elif command == "stopcapture":
