@@ -101,12 +101,12 @@ def gui_callback(detection,confidence):
 
 
 def get_image_list():
-	"""
-	Retrieves the current list of images in the images/ directory
-	:return: list of image filenames, relative to the images/ directory
-	"""
-	return [name for name in os.listdir('images') if
-			os.path.isfile("../images/" + name)]  # bugfix couunt not getting image count - don't trust stackoverflow!
+    """
+    Retrieves the current list of images in the images/ directory
+    :return: list of image filenames, relative to the images/ directory
+    """
+    return [name for name in os.listdir('images') if
+        os.path.isfile("../images/" + name)]  # bugfix couunt not getting image count - don't trust stackoverflow!
 
 
 def custom_interval_script():
@@ -114,7 +114,7 @@ def custom_interval_script():
     if my_gui.run_demo:
         print("running demo")
         #camera.capture("image"+self.images_num+".jpg")
-		image_num = len(get_image_list())
+        image_num = len(get_image_list())
         wait_capture("../images/image"+str(image_num)+".jpg")
         #my_gui.images_num += 1;
 #        detect_image("image.jpg",0.7,gui_callback)
