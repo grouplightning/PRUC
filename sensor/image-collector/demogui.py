@@ -104,7 +104,7 @@ def custom_interval_script():
     if my_gui.run_demo:
         print("running demo")
         #camera.capture("image"+self.images_num+".jpg")
-        wait_capture("../image"+str(my_gui.images_num)+".jpg")
+        wait_capture("../images/image"+str(my_gui.images_num)+".jpg")
         my_gui.images_num += 1;
 #        detect_image("image.jpg",0.7,gui_callback)
     root.after(50, custom_interval_script)
