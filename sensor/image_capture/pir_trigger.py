@@ -14,14 +14,14 @@ def pir_start():
 
 def pir_wait():
 	global pir
-	global camera
 	pir.wait_for_motion()
 
-
-def pir_capture_wait(image_path):
-	global pir
+def pir_capture(image_path):
 	global camera
 	camera.capture(image_path)
+
+def pir_waitafter():
+	global pir
 	pir.wait_for_no_motion()
 
 def pir_close():

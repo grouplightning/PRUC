@@ -92,9 +92,12 @@ class ResponseHandler:
 			#server_ts = float(args[0]) # here if we need it
 			return bytes(str(time.time()),'utf-8')
 		elif command == "startcapture":
-			self.image_thread_event = Event()
-			self.image_thread = ImageThread(self.image_thread_event)
-			self.image_thread.start()
+			if self.image_thread is None:
+				self.image_thread_event = Event()
+				self.image_thread = ImageThread(self.image_thread_event)
+				self.image_thread.start()
+			elif:
+				self.image_thread_event.clear()
 			return bytes("Okay", 'utf-8')
 		elif command == "stopcapture":
 			if not (self.image_thread is None):

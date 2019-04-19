@@ -32,8 +32,15 @@ class ImageThread(Thread):
 
 	def run(self):
 		pir_start()
-		while not self.stopped.wait(0.05):
-			wait_for_image()
+		while True:
+			if not self.stopped.is_set():
+				pir_wait()
+			if not self.stopped.is_set():
+				pir_capture()
+			if not self.stopped.is_set():
+				pir_waitafter()
+			time.sleep(0.05)
+
 		print("closing pir")
 		pir_close()
 		print("closed pir")
