@@ -28,7 +28,11 @@ def get_images(sensor_id,ip):
 		image_names = [name for name in os.listdir('images') if os.path.isfile("images/" + name)]
 		detections = {"person": 0, "horse": 0, "dog": 0, "car": 0, "bicycle": 0}
 		for image_name in image_names:
-			detect_image(os.path.join("images",image_name), 0.75, image_detect_collect_counts)
+			try:
+				detect_image(os.path.join("images",image_name), 0.75, image_detect_collect_counts)
+			except Exception as e:
+				print("Error in image detection")
+				print(e)
 		timestamp = "2019-01-01 01:01:01" #TODO: retrieve timestamp somehow!
 		db.createCounts(sensor_id, timestamp, detections['person'], detections['horse'], detections['dog'], detections['car'], detections['bicycle'], 0)
 
