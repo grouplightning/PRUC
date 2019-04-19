@@ -27,6 +27,6 @@ def wait_for_image():
 	# my_gui.images_num += 1;
 	#        detect_image("image.jpg",0.7,gui_callback)
 
-while True:
-	wait_for_image()
-	time.sleep(0.05)
+#while True:
+#	wait_for_image()
+#	time.sleep(0.05)

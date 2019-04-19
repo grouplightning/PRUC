@@ -193,6 +193,7 @@ class HubClient:
 
 		:return: Bool of whether or not we got all sensor images.
 		"""
+		self.execute_command("stopcapture")
 		# update this
 		total_images = self.get_image_amount()
 		print("total images =  "+str(total_images))
@@ -220,6 +221,7 @@ class HubClient:
 		self.send_cleanup_signal()
 
 		print("All images saved successfully.")
+		self.execute_command("startcapture")
 		return True
 
 
