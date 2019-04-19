@@ -122,7 +122,7 @@ def custom_interval_script():
 		wait_capture("../images/image" + str(image_num) + ".jpg")
 		# my_gui.images_num += 1;
 		#        detect_image("image.jpg",0.7,gui_callback)
-		root.after(50, custom_interval_script)
+	root.after(50, custom_interval_script)
 
 root.after(2000, custom_interval_script)
 root.mainloop()
