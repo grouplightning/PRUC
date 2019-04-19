@@ -13,17 +13,16 @@ def get_image_list():
 	return [name for name in os.listdir('images') if
 			os.path.isfile("images/" + name)]  # bugfix couunt not getting image count - don't trust stackoverflow!
 
-def wait_for_image():
+def pir_capture_next():
 	# test
-	print("running capture")
+	print("capturing")
 	# camera.capture("image"+self.images_num+".jpg")
-	pir_wait()
 
 	image_list = get_image_list()
 	print(image_list)
 	image_num = len(get_image_list()) + 1
 	print(image_num)
-	pir_capture_wait("images/image" + str(image_num) + ".jpg")
+	pir_capture("images/image" + str(image_num) + ".jpg")
 
 class ImageThread(Thread):
 	def __init__(self,event):
@@ -36,7 +35,7 @@ class ImageThread(Thread):
 			if not self.stopped.is_set():
 				pir_wait()
 			if not self.stopped.is_set():
-				pir_capture()
+				pir_capture_next()
 			if not self.stopped.is_set():
 				pir_waitafter()
 			time.sleep(0.05)
