@@ -8,9 +8,11 @@ camera = PiCamera()
 #camera.close()
 #exit()
 
-
-def wait_capture(image_path):
+def pir_wait():
 	pir.wait_for_motion()
+
+
+def pir_capture_wait(image_path):
 	camera.capture(image_path)
 	pir.wait_for_no_motion()
 

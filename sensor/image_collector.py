@@ -1,5 +1,5 @@
 import os
-from pir_trigger import *
+from image_capture.pir_trigger import *
 import time
 
 
@@ -16,12 +16,14 @@ def wait_for_image():
 	# test
 	print("running capture")
 	# camera.capture("image"+self.images_num+".jpg")
+	pir_wait()
+
 	image_list = get_image_list()
 	print(image_list)
 	image_num = len(get_image_list()) + 1
 	print(image_num)
+	pir_capture_wait("images/image" + str(image_num) + ".jpg")
 
-	wait_capture("images/image" + str(image_num) + ".jpg")
 	# my_gui.images_num += 1;
 	#        detect_image("image.jpg",0.7,gui_callback)
 
