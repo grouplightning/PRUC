@@ -21,7 +21,7 @@ class HubClient:
 			print("Connecting to {} port {}".format(*self.remote_address))
 			return True
 		except:
-			print("UNABLE TO CONNECT TO HUB!!!!")
+			print("UNABLE TO CONNECT TO SENSOR!!!!")
 			return False
 
 	def disconnect(self):
