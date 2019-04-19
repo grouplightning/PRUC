@@ -105,6 +105,7 @@ class ResponseHandler:
 			try:
 				with open(("images/image" + str(current_images) + ".jpg"), "rb") as image:
 					data = image.read()
+				combined_data += int.to_bytes(len(data),4, byteorder='big') + data
 			except:
 				print("Error reading image data, trying %d more times" % retries)
 				retries -= 1
@@ -112,14 +113,13 @@ class ResponseHandler:
 					print("%s was unable to be sent to the hub. DELETING IMAGE." %
 						  ("image" + str(current_images) + ".jpg"))
 					self.delete_image(current_image=current_images)
-					current_images-=1 # this line was `counter -= 1` which caused an infinite loop, the counter is not incremented because of the 'continue' however current_images was not being decreased with the deletion
+					current_images -= 1
 					retries = 3
-				continue
+					counter += 1
 
 			current_images -= 1
 			retries = 3
 			counter += 1
-			combined_data += int.to_bytes(len(data),4, byteorder='big') + data
 		# TODO: How will we get the timestamp information?
 		return combined_data
 
