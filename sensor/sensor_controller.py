@@ -98,6 +98,7 @@ class ResponseHandler:
 			return bytes("Okay", 'utf-8')
 		elif command == "stopcapture":
 			if not (self.image_thread is None):
+				print("Asking image thread to stop")
 				self.image_thread_event.set()
 			return bytes("Okay", 'utf-8')
 		print(" unknown command: `"+str(command)+"`")
