@@ -34,6 +34,7 @@ def get_images(sensor_id,ip):
 			except Exception as e:
 				print("Error in image detection")
 				print(e)
+		client.delete_all_images()
 		timestamp = "2019-01-01 01:01:01" #TODO: retrieve timestamp somehow!
 		db.createCounts(sensor_id, timestamp, detections['person'], detections['horse'], detections['dog'], detections['car'], detections['bicycle'], 0)
 

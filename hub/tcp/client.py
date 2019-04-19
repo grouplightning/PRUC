@@ -222,13 +222,36 @@ class HubClient:
 		print("All images saved successfully.")
 		return True
 
-	def delete_all_images(self):
-		"""Deletes all saved images on the hub."""
-		while self.total_images > 0:
-			image_name = "image" + str(self.total_images + 1) + ".jpg"
+
+	def delete_image_by_name(self,filename):
+		"""Deletes the specified image filename.
+
+		:param filename: The filename of the image to delete
+		:return: None
+		"""
+		image_name = ("images/" + str(filename))
+		try:
 			os.remove(image_name)
-			self.total_images -= 1
+			print("Deleted image %s." % image_name)
+		except:
+			print("Unable to delete image %s. Does it exist?" % image_name)
+
+	def get_image_list(self):
+		"""
+		Retrieves the current list of images in the images/ directory
+		:return: list of image filenames, relative to the images/ directory
+		"""
+		return [name for name in os.listdir('images') if os.path.isfile("images/" + name)] #bugfix couunt not getting image count - don't trust stackoverflow!
+
+	def delete_all_images(self):
+		"""This resets any necessary information after the hub is finished with the sensor, including deleting old images
+		"""
+		print("Cleaning up hub images")
+		for image in self.get_image_list():
+			self.delete_image_by_name(image)
+		self.total_images=0
 		print("All images deleted.")
+
 
 	# TODO: What other commands do we want to send
 	# Implement function that calls detection algorithm (see scheduler)
