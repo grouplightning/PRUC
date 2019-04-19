@@ -99,13 +99,24 @@ def gui_callback(detection,confidence):
     elif detection=="car" or detection=="bicycle":
         my_gui.addvehicle()
 
+
+def get_image_list():
+	"""
+	Retrieves the current list of images in the images/ directory
+	:return: list of image filenames, relative to the images/ directory
+	"""
+	return [name for name in os.listdir('images') if
+			os.path.isfile("../images/" + name)]  # bugfix couunt not getting image count - don't trust stackoverflow!
+
+
 def custom_interval_script():
     #test
     if my_gui.run_demo:
         print("running demo")
         #camera.capture("image"+self.images_num+".jpg")
-        wait_capture("../images/image"+str(my_gui.images_num)+".jpg")
-        my_gui.images_num += 1;
+		image_num = len(get_image_list())
+        wait_capture("../images/image"+str(image_num)+".jpg")
+        #my_gui.images_num += 1;
 #        detect_image("image.jpg",0.7,gui_callback)
     root.after(50, custom_interval_script)
 
