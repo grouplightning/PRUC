@@ -106,8 +106,9 @@ class ResponseHandler:
 				with open(("images/image" + str(current_images) + ".jpg"), "rb") as image:
 					data = image.read()
 				combined_data += int.to_bytes(len(data),4, byteorder='big') + data
-			except:
+			except Exception as e:
 				print("Error reading image data, trying %d more times" % retries)
+				print(e)
 				retries -= 1
 				if retries == 0:
 					print("%s was unable to be sent to the hub. DELETING IMAGE." %
@@ -116,6 +117,7 @@ class ResponseHandler:
 					current_images -= 1
 					retries = 3
 					counter += 1
+				continue
 
 			current_images -= 1
 			retries = 3
