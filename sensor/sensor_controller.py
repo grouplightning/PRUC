@@ -92,7 +92,7 @@ class ResponseHandler:
 			return bytes(str(time.time()),'utf-8')
 		elif command == "startcapture":
 			self.image_thread = threading.Timer(0.05, wait_for_image)
-			self.start()
+			self.image_thread.start()
 			return bytes("Okay", 'utf-8')
 		elif command == "stopcapture":
 			if not (self.image_thread is None):
