@@ -2,7 +2,7 @@ from tcp.sensor_server import SensorServer
 import os, os.path
 import struct
 import time
-from threading import Thread
+import threading
 from image_collector import *
 
 
