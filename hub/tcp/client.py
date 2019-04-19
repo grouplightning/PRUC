@@ -159,6 +159,7 @@ class HubClient:
 		success = False
 		while retries > 0 and not success:
 			success = self.execute_command_images(number_of_images)
+			retries -= 1
 		return success
 
 	def get_sensor_timestamp(self):
