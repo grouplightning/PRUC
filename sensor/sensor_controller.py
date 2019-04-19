@@ -2,7 +2,7 @@ from tcp.sensor_server import SensorServer
 import os, os.path
 import struct
 import time
-import threading
+from threading import Thread,Event
 from image_collector import *
 
 
@@ -11,6 +11,7 @@ class ResponseHandler:
 		self.image_length_size = 4
 		self.total_images = 0
 		self.image_thread = None
+		self.image_thread_event = None
 
 	@staticmethod
 	def get_image_list():
@@ -91,13 +92,14 @@ class ResponseHandler:
 			#server_ts = float(args[0]) # here if we need it
 			return bytes(str(time.time()),'utf-8')
 		elif command == "startcapture":
-			self.image_thread = threading.Timer(0.05, wait_for_image)
+			self.image_thread_event = Event()
+			self.image_thread = ImageThread(self.image_thread_event)
 			self.image_thread.start()
 			return bytes("Okay", 'utf-8')
 		elif command == "stopcapture":
 			if not (self.image_thread is None):
-				self.image_thread.cancel() #TODO: verify it actually stops
-				self.image_thread = None
+				self.image_thread_event.set()
+			return bytes("Okay", 'utf-8')
 		print(" unknown command: `"+str(command)+"`")
 
 	def ping(self, arg):

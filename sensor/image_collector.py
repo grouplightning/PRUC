@@ -1,6 +1,7 @@
 import os
 from image_capture.pir_trigger import *
 import time
+from threading import Thread,Event
 
 
 
@@ -23,6 +24,15 @@ def wait_for_image():
 	image_num = len(get_image_list()) + 1
 	print(image_num)
 	pir_capture_wait("images/image" + str(image_num) + ".jpg")
+
+class ImageThread(Thread):
+	def __init__(self,event):
+		Thread.__init__(self)
+		self.stopped = event
+
+	def run(self):
+		while not self.stopped.wait(0.05):
+			wait_for_image()
 
 	# my_gui.images_num += 1;
 	#        detect_image("image.jpg",0.7,gui_callback)
