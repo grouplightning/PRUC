@@ -100,7 +100,7 @@ class HubClient:
 					print("Done reading "+str(len(data)))
 					break
 				image_len -= len(data)
-				print(" read "+str(len(data)))
+				#print(" read "+str(len(data)))
 
 			if not image_len == 0:
 				print("Error reading in image.")
