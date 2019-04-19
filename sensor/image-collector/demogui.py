@@ -105,7 +105,7 @@ def get_image_list():
     Retrieves the current list of images in the images/ directory
     :return: list of image filenames, relative to the images/ directory
     """
-    return [name for name in os.listdir('images') if
+    return [name for name in os.listdir('../images') if
         os.path.isfile("../images/" + name)]  # bugfix couunt not getting image count - don't trust stackoverflow!
 
 
