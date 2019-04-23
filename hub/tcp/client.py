@@ -3,6 +3,13 @@ import os
 import time
 import struct
 
+def unidecode(b):
+        try:
+                return b.decode('utf-8')
+        except:
+                return bytes("",'utf-8')
+
+
 class HubClient:
 	def __init__(self):
 		self.socket = None
@@ -140,7 +147,7 @@ class HubClient:
 		:return: Integer representing the amount of pictures the sensor has to send.
 		"""
 		amountb = self.execute_command(command="totalImages")
-		amountstr = amountb.decode('utf-8')
+		amountstr = unidecode(amountb)
 		print(str(amountb)+ " -> "+str(amountstr))
 		try:
 			amount = int(amountstr)
@@ -164,8 +171,8 @@ class HubClient:
 
 	def get_sensor_timestamp(self):
 		ts = self.execute_command("time "+str(time.time()))
-		ts = ts.decode('utf-8')
-		return float(ts)
+		ts = unidecode(ts)
+		return float(ts) #TODO: check if float conversion fails
 
 	def transfer_n_images(self, number_of_images):
 		if not self.get_n_images(number_of_images): return False

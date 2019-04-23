@@ -2,6 +2,13 @@ import socket
 import time
 
 
+def unidecode(b):
+	try:
+		return b.decode('utf-8')
+	except:
+		return bytes("",'utf-8')
+
+
 class SensorServer:
 	def __init__(self):
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -41,7 +48,7 @@ class SensorServer:
 				print("No command received. Closing connection.")
 				break
 			if data:
-				command = data.decode('utf-8') #could UTF-8 decoding fail?
+				command = unidecode(data) #could UTF-8 decoding fail? - returns blank now...
 				print("Forwarding command to handler: " + command)
 				try:
 					response = handler.run_command(command)
