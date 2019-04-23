@@ -1,4 +1,4 @@
-from tcp.sensor_server import SensorServer
+from tcp.sensor_server import *
 import os, os.path
 import struct
 import time
