@@ -59,10 +59,12 @@ while True:
 
 	print("%d %d =? %d %d" % (h,m,test_h,test_m))
 
-	if h==test_h and m == test_m and not ran:
+#	if h==test_h and m == test_m and not ran:
+	if m%2==0 and not ran:
 		ran=True
 		get_images_all_sensors()
-	if (h!=test_h or m != test_m) and ran:
+#	if (h!=test_h or m != test_m) and ran:
+	if m%2!=0 and ran:
 		ran=False
 
 
