@@ -4,6 +4,7 @@ import configparser
 from tcp.client import HubClient
 from db.db import DB
 from image_detection.deep_od_lib import *
+from datetime import datetime
 #from deep_od_lib import *
 
 db = DB()
@@ -35,10 +36,10 @@ def get_images(sensor_id,ip):
 				print("Error in image detection")
 				print(e)
 			timestamp_raw = client.get_timestamp_from_image_name(image_name)
-			timestamp = datetime.utcfromtimestamp(timestamp_raw).strftime("%Y-%m-%d %H:00:00")
-			if timestamp is None:
+			if timestamp_raw is None:
 				print("can't find timestamp for image, skipping")
 				continue
+			timestamp = datetime.utcfromtimestamp(timestamp_raw).strftime("%Y-%m-%d %H:00:00")
 			if not db.doesCountsExist(sensor_id,timestamp):
 				db.createCountsStub(sensor_id,timestamp)
 			db.addCounts(sensor_id, timestamp, detections['person'], detections['horse'], detections['dog'], detections['car'], detections['bicycle'], 0)
