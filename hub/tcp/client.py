@@ -4,10 +4,10 @@ import time
 import struct
 
 def unidecode(b):
-        try:
-                return b.decode('utf-8')
-        except:
-                return bytes("",'utf-8')
+		try:
+			return b.decode('utf-8')
+		except:
+			return bytes("",'utf-8')
 
 
 class HubClient:
@@ -16,8 +16,10 @@ class HubClient:
 		self.remote_address = None
 		self.chunk = 1024
 		self.image_length_size = 4
+		self.timestamp_length_size = 4
 		self.total_images = 0
 		self.park_open = 0
+		self.timestamp_dictionary = {}
 
 	def connect(self, addr, port):
 		"""Connects to a remote sensor socket."""
@@ -30,6 +32,15 @@ class HubClient:
 		except:
 			print("UNABLE TO CONNECT TO SENSOR!!!!")
 			return False
+
+	def get_timestamp_from_image_name(self, image_name: str):
+		"""Get's the timestamp value related to the image_name key.
+
+		WARNING: This might throw an exception if the image timestamp doesn't exist
+
+		:param: The image to get the timestamp information for
+		"""
+		return self.timestamp_dictionary[image_name]
 
 	def disconnect(self):
 		"""Closes the socket connection"""
@@ -95,7 +106,7 @@ class HubClient:
 				print("Unable to get image length.")
 				return False
 			image_len = int.from_bytes(response,'big')
-			print(" image len = "+str(response)+" -> "+str(image_len))
+			print(" Image length in bytes to integer = "+str(response)+" -> "+str(image_len))
 			image_data = bytes('',"utf-8")
 			while True:
 				try:
@@ -107,7 +118,7 @@ class HubClient:
 					print("Done reading "+str(len(data)))
 					break
 				image_len -= len(data)
-				#print(" read "+str(len(data)))
+
 
 			if not image_len == 0:
 				print("Error reading in image.")
@@ -125,8 +136,35 @@ class HubClient:
 
 			print("Saved an image named: [" + image_name + "] to the hub.")
 
+			self._get_image_timestamp(image_name=image_name)
+
 			self.total_images += 1
 			number_of_images -= 1
+
+		return True
+
+
+	def _get_image_timestamp(self, image_name: str):
+		"""This reads in the image timestamp in the same channel that the image was just read from.
+
+		:param image_name: This is the image_name to save the timestamp info under.
+		:return: Bool of whether or not the timestamp was received and saved.
+		"""
+		try:
+			timestamp_response = self.socket.recv(self.timestamp_length_size)
+		except:
+			print("Unable to get timestamp in function get_image_timestamp.")
+			return False
+
+		timestamp = int.from_bytes(timestamp_response, 'big')
+
+		if timestamp <= 0:
+			print("Timestamp value received from sensor was <= 0!!")
+			return False
+		print("Received timestamp = " + str(timestamp))
+
+		self.timestamp_dictionary[image_name] = timestamp
+		print("The timestamp dictionary has been updated.")
 
 		return True
 
@@ -254,15 +292,15 @@ class HubClient:
 
 	def delete_all_images(self):
 		"""This resets any necessary information after the hub is finished with the sensor, including deleting old images
+		and resetting the timestamp dictionary.
 		"""
 		print("Cleaning up hub images")
 		for image in self.get_image_list():
 			self.delete_image_by_name(image)
 		self.total_images=0
 		print("All images deleted.")
+		self.timestamp_dictionary = {}
 
-
-	# TODO: What other commands do we want to send
 	# Implement function that calls detection algorithm (see scheduler)
 
 

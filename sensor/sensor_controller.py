@@ -116,6 +116,7 @@ class ResponseHandler:
 		#n=int(n)
 		counter = 0
 		combined_data = bytes('', "utf-8")
+		final_combined_data = bytes('', "utf-8")
 		retries = 3
 		current_images = self.total_images
 		while counter < n and retries > 0:
@@ -123,6 +124,7 @@ class ResponseHandler:
 			try:
 				with open(("images/image" + str(current_images) + ".jpg"), "rb") as image:
 					data = image.read()
+				# We append the image length to the front of the bytes of the image.
 				combined_data += int.to_bytes(len(data),4, byteorder='big') + data
 			except Exception as e:
 				print("Error reading image data, trying %d more times" % retries)
@@ -136,12 +138,32 @@ class ResponseHandler:
 					retries = 3
 					counter += 1
 				continue
+			# -----------------Adding in timestamp capability----------------
+			# Add image timestamp immediately after the image itself.
+			try:
+				image_timestamp = self.get_mtime_by_name(filename=("image" + str(current_images) + ".jpg"))
+				combined_data += int.to_bytes(image_timestamp,4, byteorder='big')
+			except Exception as e:
+				print("Error retrieving timestamp and/or appending it to byte string.")
+				print(e)
+				retries -= 1
+				combined_data = b''
+				if retries == 0:
+					print("Unable to get timestamp information for image %s. "
+						  "DELETING IMAGE" % ("image" + str(current_images) + ".jpg"))
+					self.delete_image(current_image=current_images)
+					current_images -= 1
+					retries = 3
+					counter += 1
+				continue
+			# -----------------------------------------------------------------
 
 			current_images -= 1
 			retries = 3
 			counter += 1
-		# TODO: How will we get the timestamp information?
-		return combined_data
+			final_combined_data += combined_data
+			combined_data = b''
+		return final_combined_data
 
 
 	def process_okay(self, images_to_delete):
