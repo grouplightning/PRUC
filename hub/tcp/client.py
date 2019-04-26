@@ -47,7 +47,10 @@ class HubClient:
 
 	def disconnect(self):
 		"""Closes the socket connection"""
-		self.socket.close()
+		try:
+			self.socket.close()
+		except:
+			pass
 
 	def add_one_total_images(self):
 		"""Adds one to the total image variable"""
