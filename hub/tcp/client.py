@@ -21,11 +21,12 @@ class HubClient:
 		self.park_open = 0
 		self.timestamp_dictionary = {}
 
-	def connect(self, addr, port):
+	def connect(self, addr, port, timeout=3.0):
 		"""Connects to a remote sensor socket."""
 		try:
 			self.remote_address = (addr, port)
 			self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			self.socket.settimeout(timeout)
 			self.socket.connect(self.remote_address)
 			print("Connecting to {} port {}".format(*self.remote_address))
 			return True
