@@ -29,7 +29,7 @@ class ResponseHandler:
 		:return: the timestamp indicating when the file was last modified
 		"""
 		image_name = "images/" + filename
-		return os.path.getmtime(image_name)
+		return int(os.path.getmtime(image_name))
 
 	@staticmethod
 	def get_mtime(current_image):
