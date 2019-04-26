@@ -40,7 +40,10 @@ class HubClient:
 
 		:param: The image to get the timestamp information for
 		"""
-		return self.timestamp_dictionary[image_name]
+		try:
+			return self.timestamp_dictionary[image_name]
+		except:
+			return None
 
 	def disconnect(self):
 		"""Closes the socket connection"""
