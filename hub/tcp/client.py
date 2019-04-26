@@ -235,14 +235,30 @@ class HubClient:
 		"""
 		self.execute_command(command="Cleanup")
 
+	def get_sensor_images_discrete(self):
+		try:
+			self.execute_command("stopcapture")
+		except:
+			print("stopcapture send failed")
+		try:
+			self.get_sensor_images() # get all sensor images and add them to ./images
+		except Exception as e:
+			print("get_sensor_images failed")
+			print(e)
+		try:
+			self.send_cleanup_signal()
+		except:
+			print("send cleanup failed")
+		try:
+			self.execute_command("startcapture")
+		except:
+			print("startcapture send failed")
 
 	def get_sensor_images(self):
 		"""Gets and saves all images currently stored on the sensor.
 
 		:return: Bool of whether or not we got all sensor images.
 		"""
-		self.execute_command("stopcapture")
-		# update this
 		total_images = self.get_image_amount()
 		print("total images =  "+str(total_images))
 		if total_images==0:
@@ -266,10 +282,8 @@ class HubClient:
 		for number in range(0, number_of_one_loops):
 			if not self.transfer_n_images(1): return False
 
-		self.send_cleanup_signal()
 
 		print("All images saved successfully.")
-		self.execute_command("startcapture")
 		return True
 
 

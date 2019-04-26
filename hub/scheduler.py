@@ -24,7 +24,7 @@ def image_detect_collect_counts(object_name,confidence):
 def get_images(sensor_id,ip):
 	global detections
 	if client.connect(ip, 1234):
-		client.get_sensor_images() # get all sensor images and add them to ./images
+		client.get_sensor_images_discrete()
 		client.disconnect()
 		image_names = [name for name in os.listdir('images') if os.path.isfile("images/" + name)]
 		for image_name in image_names:
