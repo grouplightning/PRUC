@@ -5,3 +5,6 @@ __pycache__/
 images/*
 .idea/
 venv/
+sensor/images/*
+hub/images/*
+

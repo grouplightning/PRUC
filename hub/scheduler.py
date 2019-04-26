@@ -26,17 +26,23 @@ def get_images(sensor_id,ip):
 		client.get_sensor_images() # get all sensor images and add them to ./images
 		client.disconnect()
 		image_names = [name for name in os.listdir('images') if os.path.isfile("images/" + name)]
-		detections = {"person": 0, "horse": 0, "dog": 0, "car": 0, "bicycle": 0}
 		for image_name in image_names:
+			detections = {"person": 0, "horse": 0, "dog": 0, "car": 0, "bicycle": 0}
 			try:
 				if detect_image(os.path.join("images",image_name), 0.75, image_detect_collect_counts) is None:
 					print(" cv2 imread failed")
 			except Exception as e:
 				print("Error in image detection")
 				print(e)
+			timestamp_raw = client.get_timestamp_from_image_name(image_name)
+			timestamp = datetime.utcfromtimestamp(timestamp_raw).strftime("%Y-%m-%d %H:00:00")
+			if timestamp is None:
+				print("can't find timestamp for image, skipping")
+				continue
+			if not db.doesCountsExist(sensor_id,timestamp):
+				db.createCountsStub(sensor_id,timestamp)
+			db.addCounts(sensor_id, timestamp, detections['person'], detections['horse'], detections['dog'], detections['car'], detections['bicycle'], 0)
 		client.delete_all_images()
-		timestamp = "2019-01-01 01:01:01" #TODO: retrieve timestamp somehow!
-		db.createCounts(sensor_id, timestamp, detections['person'], detections['horse'], detections['dog'], detections['car'], detections['bicycle'], 0)
 
 def get_images_all_sensors():
 	"""Requests the sensor id and ip from the database"""
