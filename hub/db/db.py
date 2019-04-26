@@ -34,6 +34,35 @@ class DB:
 		for row in results:
 			return row
 
+	def addCounts(self,sensor,time,people,horses,dogs,vehicles,bicycles,unknown):
+		sensor = self.escape(sensor)
+		time = self.escape(time) #time is entered as a date string, and so must be escaped
+		dogs = self.escape(dogs)
+		people = self.escape(people)
+		horses = self.escape(horses)
+		vehicles = self.escape(vehicles)
+		bicycles = self.escape(bicycles)
+		unknown = self.escape(unknown)
+		#print("UPDATE counts SET count_people=%s, count_horses=%s, count_dogs=%s, count_vehicles=%s, count_bicycles=%s, count_unknown=%s WHERE sensor=%s and time=%s" % (people,horses,dogs,vehicles,bicycles,unknown,sensor,time) )
+		self.query("UPDATE counts SET count_people=count_people+%s, count_horses=count_horses+%s, count_dogs=count_dogs+%s, count_vehicles=count_vehicles+%s, count_bicycles=count_bicycles+%s, count_unknown=count_unknown+%s WHERE sensor=%s and time=%s LIMIT 1" % (people,horses,dogs,vehicles,bicycles,unknown,sensor,time) )
+		self.conn.commit()
+		return self.cur.lastrowid
+
+	def createCountsStub(self,sensor,time):
+		sensor = self.escape(sensor)
+		time = self.escape(time) #time is entered as a date string, and so must be escaped
+		self.query("INSERT INTO counts (sensor,time,count_people,count_horses,count_dogs,count_vehicles,count_bicycles,count_unknown) VALUES (%s,%s,0,0,0,0,0,0)" % (sensor,time))
+		self.conn.commit()
+		return self.cur.lastrowid
+
+	def doesCountsExist(self, sensor, time):
+		sensor = self.escape(sensor)
+		time = self.escape(time) #time is entered as a date string, and so must be escaped
+		results = self.query("SELECT * FROM counts WHERE sensor=%s and time=%s LIMIT 1" % (sensor,time))
+		for row in results:
+			return True
+		return False
+
 	def createCounts(self, sensor, time, people, horses, dogs, vehicles, bicycles, unknown): #add new counts instance for a given time to the database
 		sensor = self.escape(sensor)
 		time = self.escape(time) #time is entered as a date string, and so must be escaped
