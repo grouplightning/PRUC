@@ -1,10 +1,11 @@
-from tkinter import Tk, Label, Button, PhotoImage
+from tkinter import Tk, Label, Button, PhotoImage, Listbox, Grid
 import configparser
 import os
 import subprocess
 
 from ui_modules.MainMenu import MainMenu
 from ui_modules.StatusMenu import StatusMenu
+from ui_modules.SensorMenu import SensorMenu
 
 
 class HubUI:
@@ -40,12 +41,35 @@ class HubUI:
 		self.current_menu = None# MainMenu(self)
 		self.previous_menu = None
 
-		self.load_menu('status',StatusMenu(self))
+		self.load_menu('sensors',SensorMenu(self))
 		self.load_menu('main',MainMenu(self))
 		#... more
 
 		self.switch_menu('main')
 
+		print(self.master.grid_size())
+
+
+	def lock_col(self,x):
+		Grid.columnconfigure(self.master, x, weight=0)
+	def lock_row(self,y):
+		Grid.rowconfigure(self.master, y, weight=0)
+	def unlock_col(self,x):
+		Grid.columnconfigure(self.master, x, weight=1)
+	def unlock_row(self,y):
+		Grid.rowconfigure(self.master, y, weight=1)
+	def unlock_grid(self):
+		(cols,rows) = self.master.grid_size()
+		for x in range(cols):
+			Grid.columnconfigure(self.master, x, weight=1)
+		for y in range(rows):
+			Grid.rowconfigure(self.master, y, weight=1)
+	def lock_grid(self):
+		(cols,rows) = self.master.grid_size()
+		for x in range(cols):
+			Grid.columnconfigure(self.master, x, weight=0)
+		for y in range(rows):
+			Grid.rowconfigure(self.master, y, weight=0)
 
 	def create_widget_settings(self):
 		return self.widget_style.copy()
@@ -55,42 +79,51 @@ class HubUI:
 		widget_settings.update(self.widget_bounds)
 
 		return widget_settings
-	def create_spacing(self,owningList,row,column):
+
+	def create_listbox(self,owningList,row,column, sticky=None):
+		widget_settings = self.create_bounded_settings()
+		widget = Listbox(**widget_settings)
+		widget.grid(row=row, column=column, sticky=sticky)
+		owningList.append(widget)
+		return widget
+
+
+	def create_spacing(self,owningList,row,column, sticky=None):
 		widget_settings = self.create_bounded_settings()
 		widget_settings.update({'text':""})
 		widget = Label(**widget_settings)
-		widget.grid(row=row,column=column)
+		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
 
-	def create_text(self,owningList,row,column,text=""):
+	def create_text(self,owningList,row,column,text="", sticky=None):
 		widget_settings = self.create_widget_settings()
 		widget_settings.update({'text':text})#,'width':self.widget_bounds['width']})
 		widget = Label(**widget_settings)
-		widget.grid(row=row,column=column)
+		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
 
-	def create_image_button(self,owningList,row,column,image,command,text=""):
+	def create_image_button(self,owningList,row,column,image,command,text="", sticky=None):
 		widget_settings = self.create_widget_settings()
 		widget_settings.update({'image':image,'text':text,'command':command})
 		widget = Button(**widget_settings)
-		widget.grid(row=row,column=column)
+		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
 
-	def create_text_button(self,owningList,row,column,command,text="",anchor="center",justify="center"):
+	def create_text_button(self,owningList,row,column,command,text="",anchor="center",justify="center", sticky=None):
 		widget_settings = self.create_widget_settings()
 		widget_settings.update({'text':text,'command':command,'anchor':anchor,'justify':justify})#,'width':self.widget_bounds['width']})
 		#print(text+" :: "+anchor+" "+justify)
 		widget = Button(**widget_settings)
-		widget.grid(row=row,column=column)
+		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
 
-	def create_menu_option(self,owningList,row,command,text,back=False):
+	def create_menu_option(self,owningList,row,command,text,back=False, sticky=None):
 		icon = self.menu_icon
 		if back:
 			icon = self.menu_back_icon
 			print(str(back)+" "+str(icon))
-		self.create_image_button(owningList, image=icon, row=row, column=1, command=command)
-		self.create_text_button(owningList, row=row, column=2, command=command, text=text, anchor="w", justify="left")
+		self.create_image_button(owningList, image=icon, row=row, column=1, command=command, sticky=sticky)
+		self.create_text_button(owningList, row=row, column=2, command=command, text=text, anchor="w", justify="left", sticky=sticky)
 
 	def load_menu(self,name,menu):
 		self.menus[name]=menu
