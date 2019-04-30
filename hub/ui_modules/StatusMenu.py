@@ -12,10 +12,10 @@ class StatusMenu:
 		ui.create_text(self.widgets,row=0, column=3, text="System Info")
 
 		ui.create_text(self.widgets,row=1, column=2, text="Total Count records: ",sticky=E)
-		self.count_records = ui.create_input(self.widgets, row=1, column=3, sticky=E + W)
+		self.count_records = ui.create_input(self.widgets, row=1, column=3, sticky=E + W, readonly=True)
 
 		ui.create_text(self.widgets,row=2, column=2, text="Hub Disk Usage: ",sticky=E)
-		self.disk_usage = ui.create_input(self.widgets, row=2, column=3, sticky=E + W)
+		self.disk_usage = ui.create_input(self.widgets, row=2, column=3, sticky=E + W, readonly=True)
 
 		self.count_records.set("populating...")
 		self.disk_usage.set("populating...")

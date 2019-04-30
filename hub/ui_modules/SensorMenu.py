@@ -34,7 +34,7 @@ class SensorMenu:
 
 		#v.set("TEST")
 
-		self.listbox.insert(END, "a list entry das asdjasd laskdjlas asdjkals sadjlasd asd")
+		#self.listbox.insert(END, "a list entry das asdjasd laskdjlas asdjkals sadjlasd asd")
 		#self.listbox.grid(column=x, row=y, sticky=N + S + E + W)
 
 
