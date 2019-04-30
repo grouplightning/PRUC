@@ -9,9 +9,9 @@ class MainMenu:
 		self.ui=ui
 		#self.master = ui.master
 
-		self.icon_a=PhotoImage(file="status.gif")
-		self.icon_b=PhotoImage(file="download.gif")
-		self.icon_c=PhotoImage(file="gear.gif")
+		self.icon_a=PhotoImage(file="ui_images/status.gif")
+		self.icon_b=PhotoImage(file="ui_images/download.gif")
+		self.icon_c=PhotoImage(file="ui_images/gear.gif")
 
 
 

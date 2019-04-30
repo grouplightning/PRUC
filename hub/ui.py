@@ -27,8 +27,8 @@ class HubUI:
 		master.configure(background='white')
 
 
-		self.menu_icon=PhotoImage(file="menu.gif")
-		self.menu_back_icon=PhotoImage(file="menu_back.gif")
+		self.menu_icon=PhotoImage(file="ui_images/menu.gif")
+		self.menu_back_icon=PhotoImage(file="ui_images/menu_back.gif")
 		#w=10*12*7
 		#h=10*12*3 + 12
 		#x=0
