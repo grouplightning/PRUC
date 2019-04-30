@@ -80,6 +80,9 @@ class DB:
 		time_before = self.escape(time_before)
 		self.query("DELETE FROM counts WHERE time<"+time_before)
 		self.conn.commit()
+	def dropCounts(self): #delete old counts before a specified date
+		self.query("DELETE FROM counts WHERE 1=1")
+		self.conn.commit()
 
 	#outdated method - can be used to create a temporary sensor entry to be updated later
 	def createSensor(self, id, name):
