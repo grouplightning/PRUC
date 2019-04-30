@@ -13,12 +13,12 @@ class ExportMenu:
 		ui.create_menu_option(self.widgets,row=0,command=ui.back,text="Back",back=True)
 		ui.create_text(self.widgets,row=0,column=3,text="Export & Clear")
 
-		ui.create_text(self.widgets,row=2,column=0,text="0")#display column layout debugging
-		ui.create_text(self.widgets,row=2,column=1,text="1")
-		ui.create_text(self.widgets,row=2,column=2,text="2")
-		ui.create_text(self.widgets,row=2,column=3,text="3")
-		ui.create_text(self.widgets,row=2,column=4,text="4")
-		ui.create_text(self.widgets,row=2,column=5,text="5")
+		#ui.create_text(self.widgets,row=2,column=0,text="0")#display column layout debugging
+		#ui.create_text(self.widgets,row=2,column=1,text="1")
+		#ui.create_text(self.widgets,row=2,column=2,text="2")
+		#ui.create_text(self.widgets,row=2,column=3,text="3")
+		#ui.create_text(self.widgets,row=2,column=4,text="4")
+		#ui.create_text(self.widgets,row=2,column=5,text="5")
 
 		#filedialog.asksaveasfilename(initialdir="/", title="Export Counter CSV",filetypes=(("CSV files", "*.csv"), ("all files", "*.*")))
 
