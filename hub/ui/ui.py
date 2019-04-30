@@ -11,6 +11,7 @@ from ui_modules.SensorMenu import SensorMenu
 class HubUI:
 	def __init__(self, master):
 		self.master = master
+		self.master.minsize(800,600)
 		master.title("PRUC Hub")
 
 		columnw = 10
