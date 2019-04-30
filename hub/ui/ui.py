@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, PhotoImage, Listbox, Grid
+from tkinter import Tk, Label, Button, PhotoImage, Listbox, Grid, BOTH
 import configparser
 import os
 import subprocess
@@ -83,7 +83,7 @@ class HubUI:
 	def create_listbox(self,owningList,row,column, sticky=None):
 		widget_settings = self.create_bounded_settings()
 		widget = Listbox(**widget_settings)
-		widget.grid(row=row, column=column, sticky=sticky)
+		widget.grid(row=row, column=column, sticky=sticky,columnspan=3)
 		owningList.append(widget)
 		return widget
 
