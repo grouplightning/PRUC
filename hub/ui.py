@@ -19,7 +19,6 @@ class HubUI:
 			self.db = DB()
 		except:
 			print("DB support initialization failed")
-			messagebox.showerror("Error", "Could not connect to Hub Database\r\nThis utility may not work correctly.")
 			self.db=None
 
 		self.master = master
@@ -120,17 +119,18 @@ class HubUI:
 	def create_input(self,owningList,row,column,text="", sticky=None, readonly=False):
 		widget_settings = self.create_widget_settings()
 		v = StringVar()
-		widget_settings.update({'relief':'sunken','background':'lightgray','borderwidth':'2'})#,'width':self.widget_bounds['width']})
+		widget_settings.update({'relief':'sunken','background':'#eeeeff','borderwidth':'2','readonlybackground':'lightgray', 'disabledbackground':'gray'})#,'width':self.widget_bounds['width']})
 		widget_settings.update({'textvariable':v})#,'width':self.widget_bounds['width']})
 		widget = Entry(**widget_settings)
+
 		if readonly:
 			widget.configure(state='readonly')
+		else:
+			widget.configure(state='normal')
 		widget.grid(row=row,column=column, sticky=sticky)
 		v.set(text)
 		owningList.append(widget)
 		return v
-
-
 	def create_image_button(self,owningList,row,column,image,command,text="", sticky=None):
 		widget_settings = self.create_widget_settings()
 		widget_settings.update({'image':image,'text':text,'command':command})
@@ -172,7 +172,13 @@ class HubUI:
 		self.current_menu = self.previous_menu #note should replace this with a stack / push-pop for deeper forward-back mechanics
 		self.current_menu.show_widgets()
 
-
 root = Tk()
 my_gui = HubUI(root)
+
+def check_db():
+	global my_gui
+	if my_gui.db is None:
+		messagebox.showerror("Error", "Could not connect to Hub Database\r\nThis utility may not work correctly.")
+
+root.after(250,check_db)
 root.mainloop()

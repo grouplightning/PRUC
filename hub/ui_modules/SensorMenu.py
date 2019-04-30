@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, PhotoImage, END, N, S, E, W
+from tkinter import Tk, Label, Button, PhotoImage, END, N, S, E, W, Entry
 import configparser
 
 
@@ -29,9 +29,12 @@ class SensorMenu:
 		self.ip_input=ui.create_input(self.widgets,row=5,column=3, sticky=E+W)
 		self.name_input=ui.create_input(self.widgets,row=6,column=3, sticky=E+W)
 		ui.create_text_button(self.widgets,row=6,column=4,command=self.create_input_sensor,text="Add sensor", styled=True)
+
+
+
 		#v.set("TEST")
 
-		#self.listbox.insert(END, "a list entry das asdjasd laskdjlas asdjkals sadjlasd asd")
+		self.listbox.insert(END, "a list entry das asdjasd laskdjlas asdjkals sadjlasd asd")
 		#self.listbox.grid(column=x, row=y, sticky=N + S + E + W)
 
 
