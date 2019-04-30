@@ -1,4 +1,5 @@
-from tkinter import Tk, Label, Button, PhotoImage, Listbox, Grid, BOTH, Entry, StringVar
+from tkinter import *
+#Tk, Label, Button, PhotoImage, Listbox, Grid, BOTH, Entry, StringVar
 import configparser
 import os
 import subprocess
@@ -83,6 +84,7 @@ class HubUI:
 
 	def create_listbox(self,owningList,row,column, sticky=None):
 		widget_settings = self.create_bounded_settings()
+		widget_settings.update({'relief':'sunken','background':'#ccc9b8','activestyle':'none','borderwidth':'2'})#,'width':self.widget_bounds['width']})
 		widget = Listbox(**widget_settings)
 		widget.grid(row=row, column=column, sticky=sticky,columnspan=3)
 		owningList.append(widget)
@@ -95,10 +97,17 @@ class HubUI:
 		widget = Label(**widget_settings)
 		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
+	def create_text(self,owningList,row,column,text="", sticky=None):
+		widget_settings = self.create_widget_settings()
+		widget_settings.update({'text':text})#,'width':self.widget_bounds['width']})
+		widget = Label(**widget_settings)
+		widget.grid(row=row,column=column, sticky=sticky)
+		owningList.append(widget)
 
 	def create_input(self,owningList,row,column,text="", sticky=None):
 		widget_settings = self.create_widget_settings()
 		v = StringVar()
+		widget_settings.update({'relief':'sunken','background':'lightgray','borderwidth':'2'})#,'width':self.widget_bounds['width']})
 		widget_settings.update({'textvariable':v})#,'width':self.widget_bounds['width']})
 		widget = Entry(**widget_settings)
 		widget.grid(row=row,column=column, sticky=sticky)
@@ -106,12 +115,6 @@ class HubUI:
 		owningList.append(widget)
 		return v
 
-	def create_text(self,owningList,row,column,text="", sticky=None):
-		widget_settings = self.create_widget_settings()
-		widget_settings.update({'text':text})#,'width':self.widget_bounds['width']})
-		widget = Label(**widget_settings)
-		widget.grid(row=row,column=column, sticky=sticky)
-		owningList.append(widget)
 
 	def create_image_button(self,owningList,row,column,image,command,text="", sticky=None):
 		widget_settings = self.create_widget_settings()
@@ -120,9 +123,11 @@ class HubUI:
 		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
 
-	def create_text_button(self,owningList,row,column,command,text="",anchor="center",justify="center", sticky=None):
+	def create_text_button(self,owningList,row,column,command,text="",anchor="center",justify="center", sticky=None, styled=False):
 		widget_settings = self.create_widget_settings()
 		widget_settings.update({'text':text,'command':command,'anchor':anchor,'justify':justify})#,'width':self.widget_bounds['width']})
+		if styled:
+			widget_settings.update({'relief': 'raised','background':'#ece9d8','borderwidth': '2'})  # ,'width':self.widget_bounds['width']})
 		#print(text+" :: "+anchor+" "+justify)
 		widget = Button(**widget_settings)
 		widget.grid(row=row,column=column, sticky=sticky)
