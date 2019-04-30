@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox #not sure why this is necessary but * doesn't pull this in
 #Tk, Label, Button, PhotoImage, Listbox, Grid, BOTH, Entry, StringVar
 import configparser
 import os
@@ -8,9 +9,18 @@ from ui_modules.MainMenu import MainMenu
 from ui_modules.StatusMenu import StatusMenu
 from ui_modules.SensorMenu import SensorMenu
 
+from db.db import DB
+
 
 class HubUI:
 	def __init__(self, master):
+		try:
+			self.db = DB()
+		except:
+			print("DB support initialization failed")
+			messagebox.showerror("Error", "Could not connect to Hub Database\r\nThis utility may not work correctly.")
+			self.db=None
+
 		self.master = master
 		self.master.minsize(800,600)
 		master.title("PRUC Hub")
