@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, PhotoImage, Listbox, Grid, BOTH
+from tkinter import Tk, Label, Button, PhotoImage, Listbox, Grid, BOTH, Entry, StringVar
 import configparser
 import os
 import subprocess
@@ -95,6 +95,16 @@ class HubUI:
 		widget = Label(**widget_settings)
 		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
+
+	def create_input(self,owningList,row,column,text="", sticky=None):
+		widget_settings = self.create_widget_settings()
+		v = StringVar()
+		widget_settings.update({'textvariable':v})#,'width':self.widget_bounds['width']})
+		widget = Entry(**widget_settings)
+		widget.grid(row=row,column=column, sticky=sticky)
+		v.set(text)
+		owningList.append(widget)
+		return v
 
 	def create_text(self,owningList,row,column,text="", sticky=None):
 		widget_settings = self.create_widget_settings()
