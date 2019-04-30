@@ -6,7 +6,7 @@ import os
 import subprocess
 
 from ui_modules.MainMenu import MainMenu
-from ui_modules.StatusMenu import StatusMenu
+from ui_modules.ExportMenu import ExportMenu
 from ui_modules.SensorMenu import SensorMenu
 
 from db.db import DB
@@ -55,6 +55,7 @@ class HubUI:
 
 		self.load_menu('sensors',SensorMenu(self))
 		self.load_menu('main',MainMenu(self))
+		self.load_menu('export',ExportMenu(self))
 		#... more
 
 		self.switch_menu('main')
