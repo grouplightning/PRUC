@@ -23,7 +23,7 @@ class MainMenu:
 		self.labels = []
 		ui.create_text(self.labels, row=2, column=1, text="Sensors")
 		ui.create_text(self.labels, row=2, column=3, text="Export")
-		ui.create_text(self.labels, row=2, column=5, text="Configure")
+		ui.create_text(self.labels, row=2, column=5, text="Sys Info")
 
 		self.spacing = []
 		ui.create_spacing(self.spacing, 0, 0)
@@ -56,5 +56,5 @@ class MainMenu:
 		print("export")
 		self.ui.switch_menu('export')
 	def configure(self):
-		print("configure")
-		self.ui.switch_menu('configure')
+		print("status")
+		self.ui.switch_menu('status')

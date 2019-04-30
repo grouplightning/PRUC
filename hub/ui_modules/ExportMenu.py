@@ -25,7 +25,7 @@ class ExportMenu:
 		ui.create_text_button(self.widgets,row=3,column=3,command=self.export_sensors,text="Export Sensor List ...", styled=True, sticky=E+W)
 		ui.create_text_button(self.widgets,row=4,column=3,command=self.export_counts,text="Export Count Records ...", styled=True, sticky=E+W)
 		ui.create_text(self.widgets,row=5,column=0,text="")#spacer
-		ui.create_text_button(self.widgets,row=7,column=3,command=self.drop_counts,text="Clear Count Records ...", styled=True, sticky=E+W)
+		ui.create_text_button(self.widgets,row=7,column=3,command=self.drop_counts,text="Clear Count Records", styled=True, sticky=E+W)
 		#v.set("TEST")
 
 		#self.listbox.insert(END, "a list entry das asdjasd laskdjlas asdjkals sadjlasd asd")

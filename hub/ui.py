@@ -8,6 +8,7 @@ import subprocess
 from ui_modules.MainMenu import MainMenu
 from ui_modules.ExportMenu import ExportMenu
 from ui_modules.SensorMenu import SensorMenu
+from ui_modules.StatusMenu import StatusMenu
 
 from db.db import DB
 
@@ -53,6 +54,7 @@ class HubUI:
 		self.current_menu = None# MainMenu(self)
 		self.previous_menu = None
 
+		self.load_menu('status',StatusMenu(self))
 		self.load_menu('sensors',SensorMenu(self))
 		self.load_menu('main',MainMenu(self))
 		self.load_menu('export',ExportMenu(self))
@@ -115,12 +117,14 @@ class HubUI:
 		widget.grid(row=row,column=column, sticky=sticky)
 		owningList.append(widget)
 
-	def create_input(self,owningList,row,column,text="", sticky=None):
+	def create_input(self,owningList,row,column,text="", sticky=None, readonly=False):
 		widget_settings = self.create_widget_settings()
 		v = StringVar()
 		widget_settings.update({'relief':'sunken','background':'lightgray','borderwidth':'2'})#,'width':self.widget_bounds['width']})
 		widget_settings.update({'textvariable':v})#,'width':self.widget_bounds['width']})
 		widget = Entry(**widget_settings)
+		if readonly:
+			widget.configure(state='readonly')
 		widget.grid(row=row,column=column, sticky=sticky)
 		v.set(text)
 		owningList.append(widget)
