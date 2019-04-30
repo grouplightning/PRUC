@@ -25,10 +25,10 @@ class HubUI:
 		self.master.minsize(800,600)
 		master.title("PRUC Hub")
 
-		columnw = 10
-		rowh = 5
-		fontsize = 15
-		font = ("TkDefaultFont", fontsize)
+		#columnw = 10
+		#rowh = 5
+		#fontsize = 15
+		#font = ("TkDefaultFont", fontsize)
 
 
 		self.widget_bounds={'width':10, 'height':5}
