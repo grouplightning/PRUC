@@ -48,7 +48,7 @@ class ExportMenu:
 			print("selected file: "+filename)
 			with open(filename, 'w') as the_file:
 				results = self.ui.db.query("SELECT id,sensor,time,count_people,count_horses,count_dogs,count_vehicles,count_bicycles,count_unknown FROM counts")
-				the_file.write('ip,name\n')
+				the_file.write("id,sensor,time,count_people,count_horses,count_dogs,count_vehicles,count_bicycles,count_unknown\n")
 				for row in results:
 					idn,sensor,time,count_people,count_horses,count_dogs,count_vehicles,count_bicycles,count_unknown = row
 					the_file.write('%s,%s,%s,%s,%s,%s,%s,%s,%s\n' % (idn,sensor,time,count_people,count_horses,count_dogs,count_vehicles,count_bicycles,count_unknown))
