@@ -37,6 +37,7 @@ class ExportMenu:
 	def drop_counts(self):
 		try:
 			self.ui.db.dropCounts()
+			self.ui.db.clearSensorErrors()
 		except Exception as e:
 			print("could not drop counts")
 			print(e)

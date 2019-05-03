@@ -1,5 +1,5 @@
 import pymysql as sql
-
+import datetime
 
 
 
@@ -120,11 +120,30 @@ class DB:
 		self.query("DELETE FROM sensors WHERE id="+id)
 		self.conn.commit()
 
+	def updateSensorSeen(self,id):
+		id = self.escape(id)
+		time = str(datetime.datetime.now())
+		self.query("UPDATE sensors SET lastseen='%s' WHERE id=%s" % (time,id) )
+		self.conn.commit()
+
+	def recordSensorError(self,id):
+		id = self.escape(id)
+		self.query("UPDATE sensors SET errors=errors+1 WHERE id=%s" % (id) )
+		self.conn.commit()
+
+	def clearSensorErrors(self):
+		self.query("UPDATE sensors SET errors=0 WHERE 1=1" )
+		self.conn.commit()
+
+
 	def updateSensor(self,id,name,mac,ip):
 		id = self.escape(id)
 		name = self.escape(name)
 		self.query("UPDATE sensors SET name=%s, mac=%s, ip=%s WHERE id=%s" % (name,mac,ip,id))
 		self.conn.commit()
+
+#db=DB();
+#db.clearSensorErrors()
 
 """
 db = DB();

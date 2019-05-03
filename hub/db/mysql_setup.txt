@@ -32,9 +32,10 @@ CREATE TABLE counts (
 NOTE: made sensor an index (or foreign key)
 
 CREATE TABLE sensors(
-	id varchar(32) UNIQUE NOT NULL
+	id varchar(32) UNIQUE NOT NULL,
+	ip varchar(32),
 );
-
+	
 
 
 ======================================================

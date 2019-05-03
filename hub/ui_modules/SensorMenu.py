@@ -62,21 +62,22 @@ class SensorMenu:
 		except Exception as e:
 			print("could not remove sensor")
 			print(e)
-		self.add_sensor_entry(ip,name)
+		self.add_sensor_entry(ip,name,0,"Never")
 
 	def populate_sensor_list(self):
 		self.listbox.delete(0,END)
 		try:
-			results = self.ui.db.query("SELECT ip,name FROM sensors")
+			results = self.ui.db.query("SELECT ip,name,errors,lastseen FROM sensors")
 			for row in results:
-				ip,name = row
-				self.add_sensor_entry(ip, name)
+				ip,name,errors,lastseen = row
+				self.add_sensor_entry(ip, name, errors, lastseen)
 		except Exception as e:
 			print("failed to populate db sensors")
 			print(e)
 
-	def add_sensor_entry(self,ip,name):
-		self.listbox.insert(END, str(ip)+" - "+str(name))#id/ip - name  but we take the ip as the id
+	def add_sensor_entry(self,ip,name,errors,lastseen="1999-01-01 01:01:01"):
+		if lastseen is "1999-01-01 01:01:01": lastseen="Never"
+		self.listbox.insert(END, str(ip)+" - "+str(name) + " - errors: "+str(errors)+" - last seen: "+str(lastseen))#id/ip - name  but we take the ip as the id
 
 
 	def back(self):

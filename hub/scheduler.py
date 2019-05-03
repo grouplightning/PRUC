@@ -24,6 +24,7 @@ def image_detect_collect_counts(object_name,confidence):
 def get_images(sensor_id,ip):
 	global detections
 	if client.connect(ip, 1234):
+		db.updateSensorSeen(sensor_id)
 		client.get_sensor_images_discrete()
 		client.disconnect()
 		image_names = [name for name in os.listdir('images') if os.path.isfile("images/" + name)]
@@ -44,6 +45,8 @@ def get_images(sensor_id,ip):
 				db.createCountsStub(sensor_id,timestamp)
 			db.addCounts(sensor_id, timestamp, detections['person'], detections['horse'], detections['dog'], detections['car'], detections['bicycle'], 0)
 		client.delete_all_images()
+	else:
+		db.recordSensorError(sensor_id)
 
 def get_images_all_sensors():
 	"""Requests the sensor id and ip from the database"""
