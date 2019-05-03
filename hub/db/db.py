@@ -99,7 +99,7 @@ class DB:
 		return self.cur.lastrowid # return the internal row number (sensorid when using autoincrement)
 		#TODO: need to check lastrowid behavior / choose id type in our sensor table (autoincrement int would be easiest)
 
-	def createSensor(self,id,name,mac,ip):
+	def createSensorEx(self,id,name,mac,ip):
 		"""
 		Create a sensor database entry that has fully denied information (name,mac,ip)
 		:param id: the internal id of the sensor
@@ -110,6 +110,9 @@ class DB:
 		"""
 		id = self.escape(id)
 		name = self.escape(name)
+		mac = self.escape(mac)
+		ip = self.escape(ip)
+
 		self.query("INSERT INTO sensors (id,name,mac,ip) VALUES (%s,%s,%s,%s)" % (id,name,mac,ip) )
 		self.conn.commit()
 		return self.cur.lastrowid # return the internal row number (sensorid when using autoincrement)

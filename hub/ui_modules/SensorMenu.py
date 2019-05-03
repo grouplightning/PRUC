@@ -58,13 +58,14 @@ class SensorMenu:
 		name = self.name_input.get()
 
 		try:
-			self.ui.db.createSensor(ip,ip,name)
+			self.ui.db.createSensorEx(ip,name,"NO-MAC",ip)
 		except Exception as e:
 			print("could not remove sensor")
 			print(e)
 		self.add_sensor_entry(ip,name,0,"Never")
 
 	def populate_sensor_list(self):
+		print("repopulating sensors")
 		self.listbox.delete(0,END)
 		try:
 			results = self.ui.db.query("SELECT ip,name,errors,lastseen FROM sensors")

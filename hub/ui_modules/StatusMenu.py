@@ -7,6 +7,7 @@ class StatusMenu:
 		self.ui=ui
 
 		self.widgets = []
+		self.unused_widgets = []
 
 		ui.create_menu_option(self.widgets, row=0, command=ui.back, text="Back", back=True)
 		ui.create_text(self.widgets,row=0, column=3, text="System Info")
@@ -14,15 +15,15 @@ class StatusMenu:
 		ui.create_text(self.widgets,row=1, column=2, text="Total Count records: ",sticky=E)
 		self.count_records = ui.create_input(self.widgets, row=1, column=3, sticky=E + W, readonly=True)
 
-		ui.create_text(self.widgets,row=2, column=2, text="Hub Disk Usage: ",sticky=E)
-		self.disk_usage = ui.create_input(self.widgets, row=2, column=3, sticky=E + W, readonly=True)
+		#ui.create_text(self.widgets,row=2, column=2, text="Hub Disk Usage: ",sticky=E)
+		#self.disk_usage = ui.create_input(self.unused_widgets, row=2, column=3, sticky=E + W, readonly=True)
 
 		self.count_records.set("populating...")
-		self.disk_usage.set("populating...")
+		#self.disk_usage.set("populating...")
 
 	def populate_info(self):
 		self.populate_counts()
-		self.populate_usage()
+		#self.populate_usage()
 
 	def populate_usage(self):
 		try:
@@ -46,7 +47,7 @@ class StatusMenu:
 		try:
 			results = self.ui.db.query("SELECT COUNT(*) FROM counts")
 			for row in results:
-				self.count_records.set(str(row))
+				self.count_records.set(str(row[0]))
 		except Exception as e:
 			print("could not populate info")
 			print(e)
