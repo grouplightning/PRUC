@@ -65,6 +65,7 @@ class SensorMenu:
 		self.add_sensor_entry(ip,name)
 
 	def populate_sensor_list(self):
+		self.listbox.delete(0,END)
 		try:
 			results = self.ui.db.query("SELECT ip,name FROM sensors")
 			for row in results:
