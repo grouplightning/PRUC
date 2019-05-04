@@ -96,7 +96,7 @@ class HubUI:
 
 	def create_listbox(self,owningList,row,column, sticky=None):
 		widget_settings = self.create_bounded_settings()
-		widget_settings.update({'relief':'sunken','background':'#ccc9b8','activestyle':'none','borderwidth':'2'})#,'width':self.widget_bounds['width']})
+		widget_settings.update({'relief':'sunken','background':'#9090ee','activestyle':'none','borderwidth':'2'})#,'width':self.widget_bounds['width']})
 		widget = Listbox(**widget_settings)
 		widget.grid(row=row, column=column, sticky=sticky,columnspan=3)
 		owningList.append(widget)
