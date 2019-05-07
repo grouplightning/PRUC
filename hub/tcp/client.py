@@ -75,6 +75,15 @@ class HubClient:
 			print("Unable to send command %s" % command)
 			return False
 
+	def empty_socket():
+		try:
+			input = [self.socket]
+			while True:
+				inputready, o, e = select.select(input, [], [], 0.0)
+				if len(inputready)==0: break
+				for s in inputready: s.recv(1)
+		except Exception as e:
+			pass
 
 	def execute_command(self, command):
 		"""Sends a command to a sensor and receives the sensor's response
@@ -84,7 +93,8 @@ class HubClient:
 		"""
 		data = bytes('', "utf-8")
 
-		if not self.send_command(command,0.25): return False
+		self.empty_socket()
+		if not self.send_command(command,1.0): return False
 
 		while True:
 			try:
@@ -94,6 +104,7 @@ class HubClient:
 			data += response
 			if len(response) == 0:
 				break
+		
 		return data
 
 	def execute_command_images(self, number_of_images):
