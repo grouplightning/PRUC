@@ -75,7 +75,7 @@ class HubClient:
 			print("Unable to send command %s" % command)
 			return False
 
-	def empty_socket():
+	def empty_socket(self):
 		try:
 			input = [self.socket]
 			while True:

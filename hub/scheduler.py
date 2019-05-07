@@ -51,10 +51,19 @@ def get_images(sensor_id,ip):
 def get_images_all_sensors():
 	"""Requests the sensor id and ip from the database"""
 	results = db.query("SELECT id,ip FROM sensors")
+	print("Getting images from sensors\n")
+	sensors = []
 	for row in results:
+		id,ip=row
+		sensors.append((id,ip))
+	for row in sensors:
 		sensor_id = row[0]
 		ip = row[1]
-		get_images(sensor_id,ip)
+		print("Getting images from sensor %s\n" % sensor_id)
+		try:
+			get_images(sensor_id,ip)
+		except Exception as e:
+			pass
 
 
 while True:
